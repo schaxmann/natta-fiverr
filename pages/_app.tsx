@@ -1,4 +1,4 @@
-import { Box, ChakraProvider, extendTheme } from "@chakra-ui/react";
+import { Box, ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import "reset-css";
 // import PlayerLayout from "../components/PlayerLayout";
 
@@ -35,7 +35,19 @@ const theme = extendTheme({
 function MyApp() {
   return (
     <ChakraProvider theme={theme}>
-      <Box height="100vh" width="calc(100vh * 0.46208530805)" bg="black"></Box>
+      <Flex
+        position="absolute"
+        height="100vh"
+        width="100vw"
+        align="center"
+        justify="center"
+      >
+        <Box
+          height="100vh"
+          width="calc(100vh * 0.46208530805)"
+          bg="black"
+        ></Box>
+      </Flex>
       {/* {Component.authpage ? (
         <Component {...pageProps} />
       ) : (
