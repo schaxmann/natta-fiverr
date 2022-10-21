@@ -77,7 +77,47 @@ function MyApp() {
           width="calc(100vh * (9/19.5))"
           minWidth="calc(100vh * (9/19.5))"
           bg="black"
-        ></Box>
+        >
+          <Flex flexDir="column" align="center">
+            <Box width="100%" height="calc(100vh * 0.4)" bg="white">
+              <Text height="calc(100vh * 0.34)">This will be a camera</Text>
+              <Flex
+                width="100%"
+                height="calc(100vh * 0.06)"
+                bg="gray.300"
+                opacity="70%"
+                flexDirection="column"
+                justifyContent="flex-end"
+              >
+                <Text fontSize="3xl">Username</Text>
+              </Flex>
+            </Box>
+            <Flex
+              width="100%"
+              height="calc(100vh * 0.2)"
+              bg="orange"
+              flexDirection="column"
+              justifyContent="center"
+            >
+              <Text fontSize="2xl" textAlign="center">
+                This will be the question
+              </Text>
+            </Flex>
+            <Box width="100%" height="calc(100vh * 0.4)" bg="white">
+              <Text height="calc(100vh * 0.34)">This will be a camera</Text>
+              <Flex
+                width="100%"
+                height="calc(100vh * 0.06)"
+                bg="gray.300"
+                opacity="70%"
+                flexDirection="column"
+                justifyContent="flex-end"
+              >
+                <Text fontSize="3xl">Username</Text>
+              </Flex>
+            </Box>
+          </Flex>
+        </Box>
         <Box
           id="leftColumn"
           height="100vh"
