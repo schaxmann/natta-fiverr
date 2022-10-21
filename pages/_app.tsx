@@ -85,7 +85,7 @@ function MyApp() {
           flexGrow="1"
           bg="gray.400"
         >
-          <Box height="100%" p="50px" pt="0">
+          <Box height="100%" p="50px" pt="35px">
             <Text fontSize="3xl" textAlign="right">
               Under The Hood:
             </Text>
