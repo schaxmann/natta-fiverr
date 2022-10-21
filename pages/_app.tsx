@@ -1,6 +1,5 @@
 import { Box, ChakraProvider, extendTheme, Flex } from "@chakra-ui/react";
 import "reset-css";
-// import PlayerLayout from "../components/PlayerLayout";
 
 const theme = extendTheme({
   colors: {
@@ -42,21 +41,20 @@ function MyApp() {
         align="center"
         justify="center"
       >
-        <Box
-          height="100vh"
-          width="calc(100vh * 0.46208530805)"
-          bg="black"
-        ></Box>
+        <Box height="100vh" width="calc(100vh * (9/19.5))" bg="black"></Box>
       </Flex>
-      {/* {Component.authpage ? (
-        <Component {...pageProps} />
-      ) : (
-        <PlayerLayout>
-          <Component {...pageProps} />
-        </PlayerLayout>
-      )} */}
     </ChakraProvider>
   );
 }
 
 export default MyApp;
+
+{
+  /* {Component.authpage ? (
+        <Component {...pageProps} />
+      ) : (
+        <PlayerLayout>
+          <Component {...pageProps} />
+        </PlayerLayout>
+      )} */
+}
