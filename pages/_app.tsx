@@ -4,6 +4,8 @@ import {
   ChakraProvider,
   extendTheme,
   Flex,
+  Heading,
+  Highlight,
   Text,
 } from "@chakra-ui/react";
 import "reset-css";
@@ -58,16 +60,23 @@ function MyApp() {
         >
           <Box height="100%" p="50px" pt="0">
             <NextImage src="/favicon" width="20px" height="20px"></NextImage>
-            <Text fontSize="5xl">Natter.ly</Text>
-            <Text fontSize="3xl">The home of interesting conversation</Text>
-            <Text fontSize="2xl">
+            <Heading lineHeight="tall"> Natter.ly</Heading>
+            <Heading lineHeight="tall" fontSize="3xl" pt="10px">
+              The home of{" "}
+              <Highlight
+                query={["real"]}
+                styles={{ px: "2", py: "1", rounded: "full", bg: "teal.100" }}
+              >
+                real conversation
+              </Highlight>
+            </Heading>
+            <Text fontSize="2xl" pt="20px">
               Natterly was founded on the fundamental belief that good
               conversation is food for the soul.
             </Text>
-            <Text fontSize="2xl">
-              The framework we have created exists to facilitate meaningful
-              one-to-one interaction at scale, for those tired of traditional
-              platforms.
+            <Text fontSize="2xl" pt="20px">
+              Our framework exists to facilitate meaningful one-to-one
+              interaction, for those tired of traditional platforms.
             </Text>
           </Box>
         </Box>
@@ -126,9 +135,9 @@ function MyApp() {
           bg="gray.400"
         >
           <Box height="100%" p="50px" pt="35px">
-            <Text fontSize="3xl" textAlign="right">
+            <Heading fontSize="3xl" textAlign="right">
               Under The Hood:
-            </Text>
+            </Heading>
             <Text fontSize="2xl" textAlign="right">
               Natterly was founded on the fundamental belief that good
               conversation is food for the soul.
