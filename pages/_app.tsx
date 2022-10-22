@@ -103,7 +103,7 @@ function MyApp() {
                 flexDirection="column"
                 justifyContent="flex-end"
               >
-                <Text fontSize="3xl">Username</Text>
+                <Text fontSize="3xl">Callum R.</Text>
               </Flex>
             </Box>
             <Flex
@@ -132,7 +132,7 @@ function MyApp() {
                 flexDirection="column"
                 justifyContent="flex-end"
               >
-                <Text fontSize="3xl">Username</Text>
+                <Text fontSize="3xl">Jaime F.</Text>
               </Flex>
             </Box>
           </Flex>
