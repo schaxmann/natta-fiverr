@@ -89,7 +89,12 @@ function MyApp() {
         >
           <Flex flexDir="column" align="center">
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-              <Text height="calc(100vh * 0.34)">This will be a camera</Text>
+              <NextImage
+                src="/Person_1.jpeg"
+                layout="responsive"
+                height="390px"
+                width="540px"
+              ></NextImage>
               <Flex
                 width="100%"
                 height="calc(100vh * 0.06)"
@@ -113,7 +118,12 @@ function MyApp() {
               </Text>
             </Flex>
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-              <Text height="calc(100vh * 0.34)">This will be a camera</Text>
+              <NextImage
+                src="/Person_2.jpeg"
+                layout="responsive"
+                height="390px"
+                width="540px"
+              ></NextImage>
               <Flex
                 width="100%"
                 height="calc(100vh * 0.06)"
