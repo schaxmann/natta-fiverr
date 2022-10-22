@@ -114,7 +114,8 @@ function MyApp() {
               justifyContent="center"
             >
               <Text fontSize="2xl" textAlign="center">
-                This will be the question
+                If you could live anywhere in the world, but you had to move
+                tomorrow, where would it be?
               </Text>
             </Flex>
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
