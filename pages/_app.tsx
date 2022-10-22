@@ -92,7 +92,7 @@ function MyApp() {
               <NextImage
                 src="/Person_1.jpeg"
                 layout="responsive"
-                height="390px"
+                height="398px"
                 width="540px"
               ></NextImage>
               <Flex
@@ -121,7 +121,7 @@ function MyApp() {
               <NextImage
                 src="/Person_2.jpeg"
                 layout="responsive"
-                height="390px"
+                height="398px"
                 width="540px"
               ></NextImage>
               <Flex
