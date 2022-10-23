@@ -58,7 +58,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pt="0">
+          <Box height="100%" p="50px" pr="10rem" pt="0">
             <NextImage src="/favicon" width="20px" height="20px"></NextImage>
             <Heading lineHeight="tall" fontWeight="800">
               {" "}
@@ -168,7 +168,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pt="35px">
+          <Box height="100%" p="50px" pl="10rem" pt="35px">
             <Heading fontSize="3xl" textAlign="right" fontWeight="800">
               Under The Hood:
             </Heading>
