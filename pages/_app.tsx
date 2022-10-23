@@ -159,7 +159,7 @@ function MyApp() {
                     color="white"
                     pr="0.55rem"
                   >
-                    <Button>
+                    <Button className="iconButton">
                       <MdMoreTime />
                     </Button>
                     <Button>
@@ -219,9 +219,52 @@ function MyApp() {
                     "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
                 }}
               >
-                <Text fontSize="3xl" color="white" pl="2" fontWeight="600">
-                  Jaime F.
-                </Text>
+                <Flex
+                  width="100%"
+                  height="calc(100vh * 0.15)"
+                  bg="gray.300"
+                  flexDirection="row"
+                  position="relative"
+                  alignItems="flex-end"
+                  pb="10px"
+                  justifyContent="space-between"
+                  sx={{
+                    background:
+                      "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                  }}
+                >
+                  <Text
+                    fontSize="3xl"
+                    color="white"
+                    pl="2"
+                    fontWeight="600"
+                    position="relative"
+                    top="0.5rem"
+                  >
+                    Jaime F.
+                  </Text>
+                  <ButtonGroup
+                    size="sm"
+                    variant="outline"
+                    spacing="2"
+                    colorScheme="gray"
+                    color="white"
+                    pr="0.55rem"
+                  >
+                    <Button className="iconButton">
+                      <MdMoreTime />
+                    </Button>
+                    <Button>
+                      <MdOutlineSkipNext />
+                    </Button>
+                    <Button>
+                      <MdOutlineQuestionAnswer />
+                    </Button>
+                    <Button colorScheme="red">
+                      <MdOutlinedFlag />
+                    </Button>
+                  </ButtonGroup>
+                </Flex>
               </Flex>
             </Box>
           </Flex>
