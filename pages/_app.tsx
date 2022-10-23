@@ -56,11 +56,14 @@ function MyApp() {
           height="100vh"
           maxWidth="calc(50vw - 50vh * 9 / 19.5)"
           flexGrow="1"
-          bg="gray.400"
+          bg="white"
         >
           <Box height="100%" p="50px" pt="0">
             <NextImage src="/favicon" width="20px" height="20px"></NextImage>
-            <Heading lineHeight="tall"> Natter.ly</Heading>
+            <Heading lineHeight="tall" fontWeight="800">
+              {" "}
+              Natta.
+            </Heading>
             <Heading lineHeight="tall" fontSize="3xl" pt="10px">
               The home of{" "}
               <Highlight
@@ -163,15 +166,15 @@ function MyApp() {
           height="100vh"
           maxWidth="calc(50vw - 50vh * 9 / 19.5)"
           flexGrow="1"
-          bg="gray.400"
+          bg="white"
         >
           <Box height="100%" p="50px" pt="35px">
-            <Heading fontSize="3xl" textAlign="right">
+            <Heading fontSize="3xl" textAlign="right" fontWeight="800">
               Under The Hood:
             </Heading>
-            <Text fontSize="2xl" textAlign="right">
-              Natterly was founded on the fundamental belief that good
-              conversation is food for the soul.
+            <Text fontSize="2xl" textAlign="right" pt="20px">
+              This section will demonstrate features and functionality during
+              demonstration of the app.
             </Text>
           </Box>
         </Box>
