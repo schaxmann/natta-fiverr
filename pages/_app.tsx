@@ -59,12 +59,14 @@ function MyApp() {
           bg="white"
         >
           <Box height="100%" p="50px" pr="11rem" pt="0">
-            <NextImage
-              src="/favicon.ico"
-              width="20px"
-              height="20px"
-            ></NextImage>
-            <Heading lineHeight="tall" fontWeight="800">
+            <Box position="relative" display="inline" top="15px">
+              <NextImage
+                src="/favicon.ico"
+                width="50px"
+                height="50px"
+              ></NextImage>
+            </Box>
+            <Heading lineHeight="tall" fontWeight="800" display="inline">
               {" "}
               Natta.
             </Heading>
