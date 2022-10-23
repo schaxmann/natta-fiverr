@@ -59,7 +59,11 @@ function MyApp() {
           bg="white"
         >
           <Box height="100%" p="50px" pr="11rem" pt="0">
-            <NextImage src="/favicon" width="20px" height="20px"></NextImage>
+            <NextImage
+              src="/favicon.ico"
+              width="20px"
+              height="20px"
+            ></NextImage>
             <Heading lineHeight="tall" fontWeight="800">
               {" "}
               Natta.
@@ -123,15 +127,21 @@ function MyApp() {
               flexDirection="column"
               justifyContent="center"
             >
-              <Text fontSize="2xl" textAlign="center" fontWeight="600">
-                <Text
-                  display="inline"
-                  borderBottom="4px solid var(--chakra-colors-gray-800)"
-                  paddingBottom="3px"
+              <Text
+                fontSize="2xl"
+                textAlign="center"
+                fontWeight="600"
+                display="inline"
+                paddingBottom="3px"
+              >
+                <span
+                  style={{
+                    borderBottom: "4px solid var(--chakra-colors-gray-800)",
+                  }}
                 >
-                  "If you could live anywhere in the world, but you
-                </Text>{" "}
-                had to move there tomorrow, where would you go?"
+                  &quot;If you could live anywhere in the world, but you had
+                </span>{" "}
+                to move there tomorrow, where would you go?&quot;
               </Text>
             </Flex>
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
