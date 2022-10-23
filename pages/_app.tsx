@@ -116,13 +116,19 @@ function MyApp() {
             <Flex
               width="100%"
               height="calc(100vh * 0.2)"
-              bg="orange"
+              bg="white"
               flexDirection="column"
               justifyContent="center"
             >
-              <Text fontSize="2xl" textAlign="center">
-                If you could live anywhere in the world, but you had to move
-                there tomorrow, where would you choose to go?
+              <Text fontSize="2xl" textAlign="center" fontWeight="600">
+                <Text
+                  display="inline"
+                  borderBottom="4px solid var(--chakra-colors-gray-800)"
+                  paddingBottom="3px"
+                >
+                  "If you could live anywhere in the world, but you
+                </Text>{" "}
+                had to move there tomorrow, where would you go?"
               </Text>
             </Flex>
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
