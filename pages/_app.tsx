@@ -11,6 +11,13 @@ import {
   Text,
 } from "@chakra-ui/react";
 import "reset-css";
+import {
+  MdMoreTime,
+  MdOutlineSkipNext,
+  MdOutlineQuestionAnswer,
+  MdOutlinedFlag,
+} from "react-icons/md";
+import { RiQuestionnaireLine } from "react-icons/ri";
 import NextImage from "next/image";
 
 const theme = extendTheme({
@@ -60,7 +67,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pr="11rem" pt="0">
+          <Box height="100%" p="50px" pr="13rem" pt="290px">
             <Box position="relative" display="inline" top="15px">
               <NextImage
                 src="/favicon.ico"
@@ -82,8 +89,8 @@ function MyApp() {
               </Highlight>
             </Heading>
             <Text fontSize="2xl" pt="20px">
-              Natterly was founded on the fundamental belief that good
-              conversation is food for the soul.
+              Natta was founded on the fundamental belief that good conversation
+              is food for the soul.
             </Text>
             <Text fontSize="2xl" pt="20px">
               Our framework exists to facilitate meaningful one-to-one
@@ -152,9 +159,18 @@ function MyApp() {
                     color="white"
                     pr="0.55rem"
                   >
-                    <Button>Skip Q</Button>
-                    <Button>Free Q</Button>
-                    <Button>Add time</Button>
+                    <Button>
+                      <MdMoreTime />
+                    </Button>
+                    <Button>
+                      <MdOutlineSkipNext />
+                    </Button>
+                    <Button>
+                      <MdOutlineQuestionAnswer />
+                    </Button>
+                    <Button colorScheme="red">
+                      <MdOutlinedFlag />
+                    </Button>
                   </ButtonGroup>
                 </Flex>
               </Flex>
@@ -217,7 +233,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pl="11rem" pt="35px">
+          <Box height="100%" p="50px" pl="13rem" pt="390px">
             <Heading fontSize="3xl" textAlign="right" fontWeight="800">
               Under The Hood:
             </Heading>
@@ -233,13 +249,3 @@ function MyApp() {
 }
 
 export default MyApp;
-
-{
-  /* {Component.authpage ? (
-        <Component {...pageProps} />
-      ) : (
-        <PlayerLayout>
-          <Component {...pageProps} />
-        </PlayerLayout>
-      )} */
-}
