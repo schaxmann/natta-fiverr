@@ -102,12 +102,13 @@ function MyApp() {
                 flexDirection="column"
                 justifyContent="flex-end"
                 position="relative"
-                top="calc(100vh * -0.0805)"
+                top="calc(100vh * -0.15)"
                 sx={{
-                  background: "linear-gradient(to top, black, rgb(0,0,0,0))",
+                  background:
+                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
                 }}
               >
-                <Text fontSize="3xl" color="white">
+                <Text fontSize="3xl" color="white" pl="2" fontWeight="600">
                   Callum R.
                 </Text>
               </Flex>
@@ -143,7 +144,7 @@ function MyApp() {
                   background: "linear-gradient(to top, black, rgb(0,0,0,0))",
                 }}
               >
-                <Text fontSize="3xl" color="white">
+                <Text fontSize="3xl" color="white" pl="2" fontWeight="600">
                   Jaime F.
                 </Text>
               </Flex>
