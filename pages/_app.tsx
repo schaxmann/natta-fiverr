@@ -214,12 +214,12 @@ function MyApp() {
               ></NextImage>
               <Flex
                 width="100%"
-                height="calc(100vh * 0.15)"
+                height="calc(100vh * 0.1)"
                 bg="gray.300"
                 flexDirection="column"
                 justifyContent="flex-end"
                 position="relative"
-                top="calc(100vh * -0.15)"
+                top="calc(100vh * -0.1)"
                 sx={{
                   background:
                     "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
