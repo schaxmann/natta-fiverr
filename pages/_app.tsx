@@ -58,7 +58,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pr="10rem" pt="0">
+          <Box height="100%" p="50px" pr="11rem" pt="0">
             <NextImage src="/favicon" width="20px" height="20px"></NextImage>
             <Heading lineHeight="tall" fontWeight="800">
               {" "}
@@ -70,7 +70,7 @@ function MyApp() {
                 query={["real"]}
                 styles={{ px: "2", py: "1", rounded: "full", bg: "teal.100" }}
               >
-                real conversation
+                real conversation.
               </Highlight>
             </Heading>
             <Text fontSize="2xl" pt="20px">
@@ -168,13 +168,13 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pl="10rem" pt="35px">
+          <Box height="100%" p="50px" pl="11rem" pt="35px">
             <Heading fontSize="3xl" textAlign="right" fontWeight="800">
               Under The Hood:
             </Heading>
             <Text fontSize="2xl" textAlign="right" pt="20px">
-              This section will demonstrate features and functionality during
-              demonstration of the app.
+              This section will contain explainations of features and
+              functionality during demonstration of the app.
             </Text>
           </Box>
         </Box>
