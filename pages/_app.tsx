@@ -92,18 +92,24 @@ function MyApp() {
               <NextImage
                 src="/Person_1.jpeg"
                 layout="responsive"
-                height="398px"
+                height="468px"
                 width="540px"
               ></NextImage>
               <Flex
                 width="100%"
-                height="calc(100vh * 0.06)"
+                height="calc(100vh * 0.15)"
                 bg="gray.300"
-                opacity="70%"
                 flexDirection="column"
                 justifyContent="flex-end"
+                position="relative"
+                top="calc(100vh * -0.0805)"
+                sx={{
+                  background: "linear-gradient(to top, black, rgb(0,0,0,0))",
+                }}
               >
-                <Text fontSize="3xl">Callum R.</Text>
+                <Text fontSize="3xl" color="white">
+                  Callum R.
+                </Text>
               </Flex>
             </Box>
             <Flex
@@ -115,7 +121,7 @@ function MyApp() {
             >
               <Text fontSize="2xl" textAlign="center">
                 If you could live anywhere in the world, but you had to move
-                tomorrow, where would it be?
+                there tomorrow, where would you choose to go?
               </Text>
             </Flex>
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
@@ -127,13 +133,19 @@ function MyApp() {
               ></NextImage>
               <Flex
                 width="100%"
-                height="calc(100vh * 0.06)"
+                height="calc(100vh * 0.15)"
                 bg="gray.300"
-                opacity="70%"
                 flexDirection="column"
                 justifyContent="flex-end"
+                position="relative"
+                top="calc(100vh * -0.0905)"
+                sx={{
+                  background: "linear-gradient(to top, black, rgb(0,0,0,0))",
+                }}
               >
-                <Text fontSize="3xl">Jaime F.</Text>
+                <Text fontSize="3xl" color="white">
+                  Jaime F.
+                </Text>
               </Flex>
             </Box>
           </Flex>
