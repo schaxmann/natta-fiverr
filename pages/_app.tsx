@@ -129,7 +129,7 @@ function MyApp() {
               <NextImage
                 src="/Person_2.jpeg"
                 layout="responsive"
-                height="398px"
+                height="468px"
                 width="540px"
               ></NextImage>
               <Flex
@@ -139,9 +139,10 @@ function MyApp() {
                 flexDirection="column"
                 justifyContent="flex-end"
                 position="relative"
-                top="calc(100vh * -0.0905)"
+                top="calc(100vh * -0.15)"
                 sx={{
-                  background: "linear-gradient(to top, black, rgb(0,0,0,0))",
+                  background:
+                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
                 }}
               >
                 <Text fontSize="3xl" color="white" pl="2" fontWeight="600">
