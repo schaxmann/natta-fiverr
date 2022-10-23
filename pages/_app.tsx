@@ -19,6 +19,7 @@ import {
 } from "react-icons/md";
 import { RiQuestionnaireLine } from "react-icons/ri";
 import NextImage from "next/image";
+import Head from "next/head";
 
 const theme = extendTheme({
   colors: {
@@ -53,6 +54,9 @@ const theme = extendTheme({
 function MyApp() {
   return (
     <ChakraProvider theme={theme}>
+      <Head>
+        <title>Natta.</title>
+      </Head>
       <Flex
         position="absolute"
         height="100vh"
@@ -67,7 +71,7 @@ function MyApp() {
           flexGrow="1"
           bg="white"
         >
-          <Box height="100%" p="50px" pr="13rem" pt="290px">
+          <Box height="100%" p="50px" pr="13rem" pt="280px">
             <Box position="relative" display="inline" top="15px">
               <NextImage
                 src="/favicon.ico"
@@ -79,11 +83,20 @@ function MyApp() {
               {" "}
               Natta.
             </Heading>
-            <Heading lineHeight="tall" fontSize="3xl" pt="10px">
+            <Heading lineHeight="tall" fontSize="3xl" pt="10px" pb="1">
               The home of{" "}
               <Highlight
                 query={["real"]}
-                styles={{ px: "2", py: "1", rounded: "full", bg: "teal.100" }}
+                styles={{
+                  px: "2",
+                  py: "1",
+                  rounded: "full",
+                  bg: "whatsapp.50",
+                  // outline: "3px solid red",
+                  // textDecoration: "underline",
+                  // borderBottom: "solid 4px var(--chakra-colors-gray-800)",
+                  color: "var(--chakra-colors-gray-800)",
+                }}
               >
                 real conversation.
               </Highlight>
@@ -116,15 +129,15 @@ function MyApp() {
               ></NextImage>
               <Flex
                 width="100%"
-                height="calc(100vh * 0.15)"
+                height="calc(100vh * 0.10)"
                 bg="gray.300"
                 flexDirection="column"
                 justifyContent="flex-end"
                 position="relative"
-                top="calc(100vh * -0.15)"
+                top="calc(100vh * -0.1)"
                 sx={{
                   background:
-                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                    "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
                 }}
               >
                 <Flex
@@ -144,7 +157,8 @@ function MyApp() {
                   <Text
                     fontSize="3xl"
                     color="white"
-                    pl="2"
+                    p="1"
+                    pl="3"
                     fontWeight="600"
                     position="relative"
                     top="0.5rem"
@@ -152,22 +166,14 @@ function MyApp() {
                     Callum R.
                   </Text>
                   <ButtonGroup
-                    size="sm"
+                    size="md"
                     variant="outline"
                     spacing="2"
                     colorScheme="gray"
                     color="white"
-                    pr="0.55rem"
+                    p="0.2rem"
+                    pr="0.75rem"
                   >
-                    <Button className="iconButton">
-                      <MdMoreTime />
-                    </Button>
-                    <Button>
-                      <MdOutlineSkipNext />
-                    </Button>
-                    <Button>
-                      <MdOutlineQuestionAnswer />
-                    </Button>
                     <Button colorScheme="red">
                       <MdOutlinedFlag />
                     </Button>
@@ -216,7 +222,7 @@ function MyApp() {
                 top="calc(100vh * -0.15)"
                 sx={{
                   background:
-                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                    "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
                 }}
               >
                 <Flex
@@ -236,7 +242,8 @@ function MyApp() {
                   <Text
                     fontSize="3xl"
                     color="white"
-                    pl="2"
+                    p="1"
+                    pl="3"
                     fontWeight="600"
                     position="relative"
                     top="0.5rem"
@@ -244,14 +251,15 @@ function MyApp() {
                     Jaime F.
                   </Text>
                   <ButtonGroup
-                    size="sm"
+                    size="md"
                     variant="outline"
                     spacing="2"
                     colorScheme="gray"
                     color="white"
-                    pr="0.55rem"
+                    p="0.2rem"
+                    pr="0.75rem"
                   >
-                    <Button className="iconButton">
+                    <Button>
                       <MdMoreTime />
                     </Button>
                     <Button>
@@ -259,9 +267,6 @@ function MyApp() {
                     </Button>
                     <Button>
                       <MdOutlineQuestionAnswer />
-                    </Button>
-                    <Button colorScheme="red">
-                      <MdOutlinedFlag />
                     </Button>
                   </ButtonGroup>
                 </Flex>
@@ -281,7 +286,7 @@ function MyApp() {
               Under The Hood:
             </Heading>
             <Text fontSize="2xl" textAlign="right" pt="20px">
-              This section will contain explainations of features and
+              This section will contain explanations of features and
               functionality during demonstration of the app.
             </Text>
           </Box>
