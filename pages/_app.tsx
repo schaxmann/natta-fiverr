@@ -95,6 +95,7 @@ function MyApp() {
           width="calc(100vh * (9/19.5))"
           minWidth="calc(100vh * (9/19.5))"
           bg="black"
+          boxShadow="xl"
         >
           <Flex flexDir="column" align="center">
             <Box width="100%" height="calc(100vh * 0.4)" bg="white">
