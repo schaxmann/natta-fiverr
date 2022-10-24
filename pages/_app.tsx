@@ -64,14 +64,16 @@ function MyApp() {
         justify="center"
         justifyContent="space-between"
       >
-        <Box
+        <Flex
           id="leftColumn"
           height="100vh"
           maxWidth="calc(50vw - 50vh * 9 / 19.5)"
           flexGrow="1"
           bg="white"
+          flexDirection="row"
+          alignItems="center"
         >
-          <Box height="100%" p="50px" pr="13rem" pt="280px">
+          <Box p="50px" pr="7rem">
             <Box position="relative" display="inline" top="15px">
               <NextImage
                 src="/favicon.ico"
@@ -110,7 +112,7 @@ function MyApp() {
               interaction, for those tired of traditional platforms.
             </Text>
           </Box>
-        </Box>
+        </Flex>
         <Box
           id="boundingBox"
           height="100vh"
@@ -274,14 +276,15 @@ function MyApp() {
             </Box>
           </Flex>
         </Box>
-        <Box
+        <Flex
           id="leftColumn"
           height="100vh"
           maxWidth="calc(50vw - 50vh * 9 / 19.5)"
           flexGrow="1"
           bg="white"
+          alignItems="center"
         >
-          <Box height="100%" p="50px" pl="13rem" pt="390px">
+          <Box p="50px" pl="7rem">
             <Heading fontSize="3xl" textAlign="right" fontWeight="800">
               Under The Hood:
             </Heading>
@@ -290,7 +293,7 @@ function MyApp() {
               functionality during demonstration of the app.
             </Text>
           </Box>
-        </Box>
+        </Flex>
       </Flex>
     </ChakraProvider>
   );
