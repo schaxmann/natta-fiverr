@@ -1,25 +1,11 @@
-import {
-  Box,
-  Button,
-  ButtonGroup,
-  calc,
-  ChakraProvider,
-  extendTheme,
-  Flex,
-  Heading,
-  Highlight,
-  Text,
-} from "@chakra-ui/react";
-import "reset-css";
+import { Box, Button, ButtonGroup, Flex, Text } from "@chakra-ui/react";
 import {
   MdMoreTime,
   MdOutlineSkipNext,
   MdOutlineQuestionAnswer,
   MdOutlinedFlag,
 } from "react-icons/md";
-import { RiQuestionnaireLine } from "react-icons/ri";
 import NextImage from "next/image";
-import LeftColumn from "./LeftColumn";
 
 const AppView = () => {
   return (
