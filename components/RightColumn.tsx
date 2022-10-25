@@ -10,7 +10,7 @@ const RightColumn = () => {
       bg="white"
       alignItems="center"
     >
-      <Box p="50px" pl="7rem">
+      <Box pr="3.15rem" pl="7rem">
         <Heading fontSize="3xl" textAlign="right" fontWeight="800">
           Under The Hood:
         </Heading>

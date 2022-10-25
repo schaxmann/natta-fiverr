@@ -12,7 +12,7 @@ const LeftColumn = () => {
       flexDirection="row"
       alignItems="center"
     >
-      <Box p="50px" pr="7rem">
+      <Box pl="3.15rem" pr="7rem">
         <Box position="relative" display="inline" top="15px">
           <NextImage src="/favicon.ico" width="50px" height="50px"></NextImage>
         </Box>
