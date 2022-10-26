@@ -31,13 +31,13 @@ const theme = extendTheme({
   },
 });
 
-function MyApp() {
+function MyApp({ Component, pageProps }) {
   return (
     <ChakraProvider theme={theme}>
       <Head>
         <title>Natta.</title>
       </Head>
-      <Homepage />
+      <Component />
     </ChakraProvider>
   );
 }
