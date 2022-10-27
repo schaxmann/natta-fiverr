@@ -6,23 +6,26 @@ import {
   MdOutlinedFlag,
 } from "react-icons/md";
 import NextImage from "next/image";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const AppView = () => {
+  const [runDemo, setRunDemo] = useState(true);
   const videoEl = useRef(null);
 
   useEffect(() => {
     if (!videoEl) {
       return;
     }
-    navigator.mediaDevices
-      .getUserMedia({ video: { width: 540, height: 468 } })
-      .then((stream) => {
-        let video = videoEl.current;
-        video.srcObject = stream;
-        video.play();
-      });
-  }, [videoEl]);
+    if (runDemo === false) {
+      navigator.mediaDevices
+        .getUserMedia({ video: { width: 540, height: 468 } })
+        .then((stream) => {
+          let video = videoEl.current;
+          video.srcObject = stream;
+          video.play();
+        });
+    }
+  }, [videoEl, runDemo]);
 
   return (
     <Box
@@ -33,161 +36,174 @@ const AppView = () => {
       bg="black"
       boxShadow="xl"
     >
-      <Flex flexDir="column" align="center">
-        <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-          <NextImage
-            src="/Person_1.jpeg"
-            layout="responsive"
-            height="468px"
-            width="540px"
-          ></NextImage>
-          <Flex
-            width="100%"
-            height="calc(100vh * 0.10)"
-            bg="gray.300"
-            flexDirection="column"
-            justifyContent="flex-end"
-            position="relative"
-            top="calc(100vh * -0.1)"
-            sx={{
-              background:
-                "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
+      {runDemo ? (
+        <Box height="100%" width="100%" color="black" opacity="80%">
+          {" "}
+          <Button
+            onClick={() => {
+              setRunDemo(false);
             }}
           >
+            Run Demo
+          </Button>
+        </Box>
+      ) : (
+        <Flex flexDir="column" align="center">
+          <Box width="100%" height="calc(100vh * 0.4)" bg="white">
+            <NextImage
+              src="/Person_1.jpeg"
+              layout="responsive"
+              height="468px"
+              width="540px"
+            ></NextImage>
             <Flex
               width="100%"
-              height="calc(100vh * 0.15)"
+              height="calc(100vh * 0.10)"
               bg="gray.300"
-              flexDirection="row"
+              flexDirection="column"
+              justifyContent="flex-end"
               position="relative"
-              alignItems="flex-end"
-              pb="10px"
-              justifyContent="space-between"
+              top="calc(100vh * -0.1)"
               sx={{
                 background:
-                  "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                  "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
               }}
             >
-              <Text
-                fontSize="3xl"
-                color="white"
-                p="1"
-                pl="3"
-                fontWeight="600"
+              <Flex
+                width="100%"
+                height="calc(100vh * 0.15)"
+                bg="gray.300"
+                flexDirection="row"
                 position="relative"
-                top="0.5rem"
+                alignItems="flex-end"
+                pb="10px"
+                justifyContent="space-between"
+                sx={{
+                  background:
+                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                }}
               >
-                Callum R.
-              </Text>
-              <ButtonGroup
-                size="md"
-                variant="outline"
-                spacing="2"
-                colorScheme="gray"
-                color="white"
-                p="0.2rem"
-                pr="0.75rem"
-              >
-                <Button colorScheme="red">
-                  <MdOutlinedFlag />
-                </Button>
-              </ButtonGroup>
+                <Text
+                  fontSize="3xl"
+                  color="white"
+                  p="1"
+                  pl="3"
+                  fontWeight="600"
+                  position="relative"
+                  top="0.5rem"
+                >
+                  Callum R.
+                </Text>
+                <ButtonGroup
+                  size="md"
+                  variant="outline"
+                  spacing="2"
+                  colorScheme="gray"
+                  color="white"
+                  p="0.2rem"
+                  pr="0.75rem"
+                >
+                  <Button colorScheme="red">
+                    <MdOutlinedFlag />
+                  </Button>
+                </ButtonGroup>
+              </Flex>
             </Flex>
-          </Flex>
-        </Box>
-        <Flex
-          width="100%"
-          height="calc(100vh * 0.2)"
-          bg="white"
-          flexDirection="column"
-          justifyContent="center"
-        >
-          <Text
-            fontSize="2xl"
-            textAlign="center"
-            fontWeight="600"
-            display="inline"
-            paddingBottom="3px"
+          </Box>
+          <Flex
+            width="100%"
+            height="calc(100vh * 0.2)"
+            bg="white"
+            flexDirection="column"
+            justifyContent="center"
           >
-            <span
-              style={{
-                borderBottom: "4px solid var(--chakra-colors-gray-800)",
-              }}
+            <Text
+              fontSize="2xl"
+              textAlign="center"
+              fontWeight="600"
+              display="inline"
+              paddingBottom="3px"
             >
-              &quot;If you could live anywhere in the world, but you had
-            </span>{" "}
-            to move there tomorrow, where would you go?&quot;
-          </Text>
-        </Flex>
-        <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-          {/* <NextImage
+              <span
+                style={{
+                  borderBottom: "4px solid var(--chakra-colors-gray-800)",
+                }}
+              >
+                &quot;If you could live anywhere in the world, but you had
+              </span>{" "}
+              to move there tomorrow, where would you go?&quot;
+            </Text>
+          </Flex>
+          <Box width="100%" height="calc(100vh * 0.4)" bg="white">
+            {/* <NextImage
             src="/Person_2.jpeg"
             layout="responsive"
             height="468px"
             width="540px"
           ></NextImage> */}
-          <video ref={videoEl} />
-          <Flex
-            width="100%"
-            height="calc(100vh * 0.1)"
-            bg="gray.300"
-            flexDirection="column"
-            justifyContent="flex-end"
-            position="relative"
-            top="calc(100vh * -0.1)"
-            sx={{
-              background:
-                "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
-            }}
-          >
+            <video ref={videoEl} />
             <Flex
               width="100%"
-              height="calc(100vh * 0.15)"
+              height="calc(100vh * 0.1)"
               bg="gray.300"
-              flexDirection="row"
+              flexDirection="column"
+              justifyContent="flex-end"
               position="relative"
-              alignItems="flex-end"
-              pb="10px"
-              justifyContent="space-between"
+              top="calc(100vh * -0.1)"
               sx={{
                 background:
-                  "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                  "linear-gradient(to top, rgb(0,0,0,0.6) 10%, rgb(0,0,0,0.3) 40%, rgb(255,255,255,0) 80%)",
               }}
             >
-              <Text
-                fontSize="3xl"
-                color="white"
-                p="1"
-                pl="3"
-                fontWeight="600"
+              <Flex
+                width="100%"
+                height="calc(100vh * 0.15)"
+                bg="gray.300"
+                flexDirection="row"
                 position="relative"
-                top="0.5rem"
+                alignItems="flex-end"
+                pb="10px"
+                justifyContent="space-between"
+                sx={{
+                  background:
+                    "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
+                }}
               >
-                Jaime F.
-              </Text>
-              <ButtonGroup
-                size="md"
-                variant="outline"
-                spacing="2"
-                colorScheme="gray"
-                color="white"
-                p="0.2rem"
-                pr="0.75rem"
-              >
-                <Button>
-                  <MdMoreTime />
-                </Button>
-                <Button>
-                  <MdOutlineSkipNext />
-                </Button>
-                <Button>
-                  <MdOutlineQuestionAnswer />
-                </Button>
-              </ButtonGroup>
+                <Text
+                  fontSize="3xl"
+                  color="white"
+                  p="1"
+                  pl="3"
+                  fontWeight="600"
+                  position="relative"
+                  top="0.5rem"
+                >
+                  Jaime F.
+                </Text>
+                <ButtonGroup
+                  size="md"
+                  variant="outline"
+                  spacing="2"
+                  colorScheme="gray"
+                  color="white"
+                  p="0.2rem"
+                  pr="0.75rem"
+                >
+                  <Button>
+                    <MdMoreTime />
+                  </Button>
+                  <Button>
+                    <MdOutlineSkipNext />
+                  </Button>
+                  <Button>
+                    <MdOutlineQuestionAnswer />
+                  </Button>
+                </ButtonGroup>
+              </Flex>
             </Flex>
-          </Flex>
-        </Box>
-      </Flex>
+          </Box>
+        </Flex>
+      )}
     </Box>
   );
 };
