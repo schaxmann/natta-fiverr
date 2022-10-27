@@ -7,6 +7,7 @@ import {
 } from "react-icons/md";
 import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { withTheme } from "@emotion/react";
 
 const AppView = () => {
   const [runDemo, setRunDemo] = useState(true);
@@ -37,16 +38,31 @@ const AppView = () => {
       boxShadow="xl"
     >
       {runDemo ? (
-        <Box height="100%" width="100%" color="black" opacity="80%">
+        <Flex
+          height="100%"
+          width="100%"
+          color="black"
+          opacity="80%"
+          alignItems="center"
+          justifyContent="center"
+        >
           {" "}
           <Button
+            colorScheme="gray"
+            color="var(--chakra-colors-gray-800)"
+            border="2px solid black"
+            _hover={{
+              color: "white",
+              backgroundColor: "black",
+              border: "2px solid white",
+            }}
             onClick={() => {
               setRunDemo(false);
             }}
           >
             Run Demo
           </Button>
-        </Box>
+        </Flex>
       ) : (
         <Flex flexDir="column" align="center">
           <Box width="100%" height="calc(100vh * 0.4)" bg="white">
