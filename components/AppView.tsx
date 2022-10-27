@@ -11,8 +11,10 @@ import { withTheme } from "@emotion/react";
 
 const AppView = () => {
   const [runDemo, setRunDemo] = useState(true);
-  const [textInput, setTextInput] = useState("");
+  const [firstNameInput, setFirstNameInput] = useState("");
+  const [lastNameInput, setLastNameInput] = useState("");
   const [username, setUsername] = useState("");
+  const [buttonDisabled, setButtonDisabled] = useState(true);
 
   const videoEl = useRef(null);
 
@@ -30,6 +32,15 @@ const AppView = () => {
         });
     }
   }, [videoEl, runDemo]);
+
+  useEffect(() => {
+    if (firstNameInput.length === 0 || lastNameInput.length === 0) {
+      setButtonDisabled(true);
+    }
+    if (lastNameInput.length > 0) {
+      setButtonDisabled(false);
+    }
+  }, [firstNameInput, lastNameInput]);
 
   return (
     <Box
@@ -51,19 +62,30 @@ const AppView = () => {
           direction="column"
         >
           <Input
-            display="block"
             width="50%"
-            placeholder="Enter Name"
+            placeholder="First Name"
             textAlign="center"
             textColor="white"
             onChange={(e) => {
-              setTextInput(e.target.value);
+              setFirstNameInput(e.target.value);
+            }}
+          />
+          <Input
+            mt="0.5rem"
+            width="50%"
+            placeholder="Last Name"
+            textAlign="center"
+            textColor="white"
+            onChange={(e) => {
+              setLastNameInput(e.target.value);
             }}
           />
           <Button
+            disabled={buttonDisabled}
             colorScheme="gray"
             color="var(--chakra-colors-gray-800)"
             border="2px solid black"
+            mt="2rem"
             _hover={{
               color: "white",
               backgroundColor: "black",
@@ -71,7 +93,7 @@ const AppView = () => {
             }}
             onClick={() => {
               setRunDemo(false);
-              setUsername(textInput);
+              setUsername(`${firstNameInput} ${lastNameInput[0]}.`);
             }}
           >
             Run Demo
