@@ -6,8 +6,24 @@ import {
   MdOutlinedFlag,
 } from "react-icons/md";
 import NextImage from "next/image";
+import { useEffect, useRef } from "react";
 
 const AppView = () => {
+  const videoEl = useRef(null);
+
+  useEffect(() => {
+    if (!videoEl) {
+      return;
+    }
+    navigator.mediaDevices
+      .getUserMedia({ video: { width: 540, height: 468 } })
+      .then((stream) => {
+        let video = videoEl.current;
+        video.srcObject = stream;
+        video.play();
+      });
+  }, [videoEl]);
+
   return (
     <Box
       id="boundingBox"
@@ -104,12 +120,13 @@ const AppView = () => {
           </Text>
         </Flex>
         <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-          <NextImage
+          {/* <NextImage
             src="/Person_2.jpeg"
             layout="responsive"
             height="468px"
             width="540px"
-          ></NextImage>
+          ></NextImage> */}
+          <video ref={videoEl} />
           <Flex
             width="100%"
             height="calc(100vh * 0.1)"
@@ -176,3 +193,5 @@ const AppView = () => {
 };
 
 export default AppView;
+
+// TODO Webcam stream loading
