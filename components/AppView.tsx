@@ -1,4 +1,4 @@
-import { Box, Button, ButtonGroup, Flex, Text } from "@chakra-ui/react";
+import { Box, Button, ButtonGroup, Flex, Text, Input } from "@chakra-ui/react";
 import {
   MdMoreTime,
   MdOutlineSkipNext,
@@ -11,6 +11,9 @@ import { withTheme } from "@emotion/react";
 
 const AppView = () => {
   const [runDemo, setRunDemo] = useState(true);
+  const [textInput, setTextInput] = useState("");
+  const [username, setUsername] = useState("");
+
   const videoEl = useRef(null);
 
   useEffect(() => {
@@ -45,8 +48,18 @@ const AppView = () => {
           opacity="80%"
           alignItems="center"
           justifyContent="center"
+          direction="column"
         >
-          {" "}
+          <Input
+            display="block"
+            width="50%"
+            placeholder="Enter Name"
+            textAlign="center"
+            textColor="white"
+            onChange={(e) => {
+              setTextInput(e.target.value);
+            }}
+          />
           <Button
             colorScheme="gray"
             color="var(--chakra-colors-gray-800)"
@@ -58,6 +71,7 @@ const AppView = () => {
             }}
             onClick={() => {
               setRunDemo(false);
+              setUsername(textInput);
             }}
           >
             Run Demo
@@ -152,11 +166,11 @@ const AppView = () => {
           </Flex>
           <Box width="100%" height="calc(100vh * 0.4)" bg="white">
             {/* <NextImage
-            src="/Person_2.jpeg"
-            layout="responsive"
-            height="468px"
-            width="540px"
-          ></NextImage> */}
+              src="/Person_2.jpeg"
+              layout="responsive"
+              height="468px"
+              width="540px"
+            ></NextImage> */}
             <video ref={videoEl} />
             <Flex
               width="100%"
@@ -194,7 +208,7 @@ const AppView = () => {
                   position="relative"
                   top="0.5rem"
                 >
-                  Jaime F.
+                  {username}
                 </Text>
                 <ButtonGroup
                   size="md"
