@@ -37,7 +37,7 @@ function MyApp({ Component, pageProps }) {
       <Head>
         <title>Natta.</title>
       </Head>
-      <Component />
+      <Component {...pageProps} />
     </ChakraProvider>
   );
 }
