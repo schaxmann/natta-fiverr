@@ -97,7 +97,11 @@ const AppView = () => {
             }}
             onClick={() => {
               setRunDemo(true);
-              setUsername(`${firstNameInput} ${lastNameInput[0]}.`);
+              setUsername(
+                `${firstNameInput[0].toUpperCase()}${firstNameInput.substring(
+                  1
+                )} ${lastNameInput[0].toUpperCase()}.`
+              );
             }}
           >
             Run Demo
