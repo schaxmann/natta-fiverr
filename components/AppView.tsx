@@ -10,28 +10,32 @@ import { useEffect, useRef, useState } from "react";
 import { withTheme } from "@emotion/react";
 
 const AppView = () => {
-  const [runDemo, setRunDemo] = useState(true);
+  const [runDemo, setRunDemo] = useState(false);
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput] = useState("");
   const [username, setUsername] = useState("");
   const [buttonDisabled, setButtonDisabled] = useState(true);
+  const [webcamStreaming, setWebcamStreaming] = useState(false);
 
-  const videoEl = useRef(null);
+  const videoRef = useRef(null);
 
   useEffect(() => {
-    if (!videoEl) {
-      return;
-    }
-    if (runDemo === false) {
-      navigator.mediaDevices
-        .getUserMedia({ video: { width: 540, height: 468 } })
-        .then((stream) => {
-          let video = videoEl.current;
-          video.srcObject = stream;
-          video.play();
+    // if (runDemo) {
+    //   if (!videoEl) {
+    //     return;
+    //   }
+    const getUserMedia = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({
+          video: { width: 540, height: 468 },
         });
-    }
-  }, [videoEl, runDemo]);
+        videoRef.current.srcObject = stream;
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getUserMedia();
+  }, [runDemo, videoRef]);
 
   useEffect(() => {
     if (firstNameInput.length === 0 || lastNameInput.length === 0) {
@@ -51,7 +55,7 @@ const AppView = () => {
       bg="black"
       boxShadow="xl"
     >
-      {runDemo ? (
+      {!runDemo ? (
         <Flex
           height="100%"
           width="100%"
@@ -92,7 +96,7 @@ const AppView = () => {
               border: "2px solid white",
             }}
             onClick={() => {
-              setRunDemo(false);
+              setRunDemo(true);
               setUsername(`${firstNameInput} ${lastNameInput[0]}.`);
             }}
           >
@@ -187,13 +191,16 @@ const AppView = () => {
             </Text>
           </Flex>
           <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-            {/* <NextImage
-              src="/Person_2.jpeg"
-              layout="responsive"
-              height="468px"
-              width="540px"
-            ></NextImage> */}
-            <video ref={videoEl} />
+            {webcamStreaming ? (
+              <NextImage
+                src="/Person_2.jpeg"
+                layout="responsive"
+                height="468px"
+                width="540px"
+              ></NextImage>
+            ) : (
+              <video ref={videoRef} autoPlay />
+            )}
             <Flex
               width="100%"
               height="calc(100vh * 0.1)"
