@@ -138,7 +138,13 @@ const AppView = () => {
                 width="540px"
               ></NextImage>
             ) : (
-              <video ref={videoRef} autoPlay />
+              <video
+                ref={videoRef}
+                autoPlay
+                style={{
+                  transform: "scaleX(-1)",
+                }}
+              />
             )}
             <Flex
               width="100%"
