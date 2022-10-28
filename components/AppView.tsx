@@ -13,7 +13,7 @@ import Launch from "./Launch";
 const AppView = () => {
   const [runDemo, setRunDemo] = useState(false);
   const [username, setUsername] = useState("");
-  const [webcamStreaming, setWebcamStreaming] = useState(false);
+  const [webcamStreaming, setWebcamStreaming] = useState(true);
 
   const videoRef = useRef(null);
 
@@ -23,13 +23,15 @@ const AppView = () => {
         const stream = await navigator.mediaDevices.getUserMedia({
           video: { width: 540, height: 468 },
         });
-        videoRef.current.srcObject = stream;
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+        }
       } catch (err) {
         console.log(err);
       }
     };
     getUserMedia();
-  }, [runDemo, videoRef]);
+  }, [runDemo]);
 
   return (
     <Box
@@ -130,7 +132,7 @@ const AppView = () => {
             </Text>
           </Flex>
           <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-            {webcamStreaming ? (
+            {!webcamStreaming ? (
               <NextImage
                 src="/Person_2.jpeg"
                 layout="responsive"
