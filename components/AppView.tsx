@@ -29,7 +29,7 @@ const AppView = () => {
       {!runDemo ? (
         <Launch setRunDemo={setRunDemo} setUsername={setUsername} />
       ) : (
-        <AppDemo runDemo={runDemo} />
+        <AppDemo runDemo={runDemo} username={username} />
       )}
     </Box>
   );

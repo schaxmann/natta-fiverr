@@ -11,8 +11,7 @@ import { withTheme } from "@emotion/react";
 import Launch from "./Launch";
 
 const AppDemo = (props) => {
-  const { runDemo } = props;
-  const [username, setUsername] = useState("");
+  const { runDemo, username } = props;
   const [webcamStreaming, setWebcamStreaming] = useState(true);
 
   const videoRef = useRef(null);
