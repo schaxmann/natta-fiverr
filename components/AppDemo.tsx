@@ -7,8 +7,6 @@ import {
 } from "react-icons/md";
 import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
-import { withTheme } from "@emotion/react";
-import Launch from "./Launch";
 
 const AppDemo = (props) => {
   const { runDemo, username } = props;
