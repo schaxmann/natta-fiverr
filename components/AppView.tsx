@@ -1,13 +1,5 @@
-import { Box, Button, ButtonGroup, Flex, Text, Input } from "@chakra-ui/react";
-import {
-  MdMoreTime,
-  MdOutlineSkipNext,
-  MdOutlineQuestionAnswer,
-  MdOutlinedFlag,
-} from "react-icons/md";
-import NextImage from "next/image";
-import { useEffect, useRef, useState } from "react";
-import { withTheme } from "@emotion/react";
+import { Box } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import Launch from "./Launch";
 import AppDemo from "./AppDemo";
 
