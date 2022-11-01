@@ -132,6 +132,9 @@ const AppDemo = (props) => {
             style={{
               transform: "scaleX(-1)",
             }}
+            onLoad={() => {
+              setWebcamStreaming(true);
+            }}
           />
         )}
         <Flex
