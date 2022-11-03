@@ -86,7 +86,7 @@ const AppDemo = (props) => {
               p="0.2rem"
               pr="0.75rem"
             >
-              <Button colorScheme="darkMode">
+              <Button colorScheme="red">
                 <MdOutlinedFlag />
               </Button>
             </ButtonGroup>

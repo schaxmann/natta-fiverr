@@ -15,7 +15,7 @@ const RightColumn = () => {
       <Flex flexGrow="1" height="calc(100vh / 3)">
         <Flex position="absolute" right="10" top="8" gap="3">
           <MdLightMode style={{ marginTop: "2px" }} />
-          <Switch colorScheme="blackAlpha"></Switch>
+          <Switch colorScheme="darkMode"></Switch>
           <MdDarkMode style={{ marginTop: "2px" }} />
         </Flex>
       </Flex>
