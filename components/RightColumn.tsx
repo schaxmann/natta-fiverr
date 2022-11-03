@@ -12,7 +12,9 @@ const RightColumn = () => {
       alignItems="center"
     >
       <Flex flexGrow="1" height="calc(100vh / 3)">
-        <Switch p="8"></Switch>
+        <Flex position="absolute" right="10">
+          <Switch p="8"></Switch>
+        </Flex>
       </Flex>
       <Flex
         flexDir="column"
