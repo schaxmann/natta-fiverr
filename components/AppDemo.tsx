@@ -34,7 +34,7 @@ const AppDemo = (props) => {
     <Flex flexDir="column" align="center">
       <Box width="100%" height="calc(100vh * 0.4)" bg="white">
         <NextImage
-          src="/Person_1.jpeg"
+          src="/Person_3.jpeg"
           layout="responsive"
           height="468px"
           width="540px"
