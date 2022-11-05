@@ -1,4 +1,12 @@
-import { Box, Button, ButtonGroup, Flex, Text, Input } from "@chakra-ui/react";
+import {
+  Box,
+  Button,
+  ButtonGroup,
+  Flex,
+  Text,
+  Input,
+  Spinner,
+} from "@chakra-ui/react";
 import {
   MdMoreTime,
   MdOutlineSkipNext,
@@ -126,16 +134,32 @@ const AppDemo = (props) => {
             width="540px"
           ></NextImage>
         ) : (
-          <video
-            ref={videoRef}
-            autoPlay
-            style={{
-              transform: "scaleX(-1)",
-            }}
-            onLoad={() => {
-              setWebcamStreaming(true);
-            }}
-          />
+          <Flex
+            width="100%"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.100"
+              color="gray.800"
+              size="xl"
+              position="relative"
+              top="-16"
+            />
+          </Flex>
+          // <video
+          //   ref={videoRef}
+          //   autoPlay
+          //   style={{
+          //     transform: "scaleX(-1)",
+          //   }}
+          //   onLoad={() => {
+          //     setWebcamStreaming(true);
+          //   }}
+          // />
         )}
         <Flex
           width="100%"
