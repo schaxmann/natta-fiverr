@@ -18,7 +18,7 @@ import { useEffect, useRef, useState } from "react";
 
 const AppDemo = (props) => {
   const { runDemo, username } = props;
-  const [webcamStreaming, setWebcamStreaming] = useState(true);
+  const [webcamStreaming, setWebcamStreaming] = useState(false);
 
   const videoRef = useRef(null);
 
@@ -37,6 +37,14 @@ const AppDemo = (props) => {
     };
     getUserMedia();
   }, [runDemo]);
+
+  useEffect(() => {
+    if (videoRef) {
+      setTimeout(() => {
+        setWebcamStreaming(true);
+      }, 200);
+    }
+  }, [videoRef]);
 
   return (
     <Flex flexDir="column" align="center">
@@ -127,13 +135,6 @@ const AppDemo = (props) => {
       </Flex>
       <Box width="100%" height="calc(100vh * 0.4)" bg="white">
         {!webcamStreaming ? (
-          <NextImage
-            src="/Person_2.jpeg"
-            layout="responsive"
-            height="468px"
-            width="540px"
-          ></NextImage>
-        ) : (
           <Flex
             width="100%"
             height="100%"
@@ -150,16 +151,30 @@ const AppDemo = (props) => {
               top="-16"
             />
           </Flex>
-          // <video
-          //   ref={videoRef}
-          //   autoPlay
-          //   style={{
-          //     transform: "scaleX(-1)",
-          //   }}
-          //   onLoad={() => {
-          //     setWebcamStreaming(true);
-          //   }}
-          // />
+        ) : (
+          <Flex
+            width="100%"
+            height="100%"
+            alignItems="center"
+            justifyContent="center"
+          >
+            {/* <Spinner
+              thickness="4px"
+              speed="0.65s"
+              emptyColor="gray.100"
+              color="gray.800"
+              size="xl"
+              position="relative"
+              top="-16"
+            /> */}
+            <video
+              ref={videoRef}
+              autoPlay
+              style={{
+                transform: "scaleX(-1)",
+              }}
+            />
+          </Flex>
         )}
         <Flex
           width="100%"
