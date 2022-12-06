@@ -15,36 +15,38 @@ import {
 } from "react-icons/md";
 import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 
 const AppDemo = (props) => {
   const { runDemo, username } = props;
   const [webcamStreaming, setWebcamStreaming] = useState(false);
 
-  const videoRef = useRef(null);
+  // const videoRef = useRef(null);
 
-  useEffect(() => {
-    const getUserMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({
-          video: { width: 540, height: 468 },
-        });
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getUserMedia();
-  }, [runDemo]);
+  // useEffect(() => {
+  //   const getUserMedia = async () => {
+  //     try {
+  //       const stream = await navigator.mediaDevices.getUserMedia({
+  //         video: { width: 540, height: 468 },
+  //       });
+  //       if (videoRef.current) {
+  //         videoRef.current.srcObject = stream;
+  //       }
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getUserMedia();
+  // }, [runDemo]);
 
-  useEffect(() => {
-    if (videoRef) {
-      setTimeout(() => {
-        setWebcamStreaming(true);
-      }, 200);
-    }
-  }, [videoRef]);
+  const videoConstraints = {
+    width: 540,
+    height: 468,
+    facingMode: "user",
+  };
+
+  const handleUserMedia = () =>
+    setTimeout(() => setWebcamStreaming(true), 1_000);
 
   return (
     <Flex flexDir="column" align="center">
@@ -134,7 +136,7 @@ const AppDemo = (props) => {
         </Text>
       </Flex>
       <Box width="100%" height="calc(100vh * 0.4)" bg="white">
-        {!webcamStreaming ? (
+        {!webcamStreaming && (
           <Flex
             width="100%"
             height="100%"
@@ -147,35 +149,16 @@ const AppDemo = (props) => {
               emptyColor="gray.100"
               color="gray.800"
               size="xl"
-              position="relative"
-              top="-16"
-            />
-          </Flex>
-        ) : (
-          <Flex
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            {/* <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.100"
-              color="gray.800"
-              size="xl"
-              position="relative"
-              top="-16"
-            /> */}
-            <video
-              ref={videoRef}
-              autoPlay
-              style={{
-                transform: "scaleX(-1)",
-              }}
             />
           </Flex>
         )}
+        {}
+        <Webcam
+          videoConstraints={videoConstraints}
+          mirrored={true}
+          onUserMedia={handleUserMedia}
+          style={{ display: !webcamStreaming ? "none" : "block" }}
+        ></Webcam>
         <Flex
           width="100%"
           height="calc(100vh * 0.1)"
