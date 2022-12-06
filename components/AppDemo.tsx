@@ -21,24 +21,6 @@ const AppDemo = (props) => {
   const { runDemo, username } = props;
   const [webcamStreaming, setWebcamStreaming] = useState(false);
 
-  // const videoRef = useRef(null);
-
-  // useEffect(() => {
-  //   const getUserMedia = async () => {
-  //     try {
-  //       const stream = await navigator.mediaDevices.getUserMedia({
-  //         video: { width: 540, height: 468 },
-  //       });
-  //       if (videoRef.current) {
-  //         videoRef.current.srcObject = stream;
-  //       }
-  //     } catch (err) {
-  //       console.log(err);
-  //     }
-  //   };
-  //   getUserMedia();
-  // }, [runDemo]);
-
   const videoConstraints = {
     width: 540,
     height: 468,
@@ -149,6 +131,8 @@ const AppDemo = (props) => {
               emptyColor="gray.100"
               color="gray.800"
               size="xl"
+              position="relative"
+              top="-10"
             />
           </Flex>
         )}
@@ -157,7 +141,9 @@ const AppDemo = (props) => {
           videoConstraints={videoConstraints}
           mirrored={true}
           onUserMedia={handleUserMedia}
-          style={{ display: !webcamStreaming ? "none" : "block" }}
+          style={{
+            display: !webcamStreaming ? "none" : "block",
+          }}
         ></Webcam>
         <Flex
           width="100%"
