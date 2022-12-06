@@ -142,6 +142,8 @@ const AppDemo = (props) => {
           mirrored={true}
           onUserMedia={handleUserMedia}
           style={{
+            height: "100%",
+            width: "100%",
             display: !webcamStreaming ? "none" : "block",
           }}
         ></Webcam>
