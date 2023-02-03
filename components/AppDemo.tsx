@@ -473,7 +473,7 @@ const AppDemo = (props: any) => {
                   duration={30}
                   trailColor={"#000000"}
                   colors={["#ffffff", "#ffffff", "#ae0000", "#ae0000"]}
-                  colorsTime={[60, 15, 10, 0]}
+                  colorsTime={[30, 7, 5, 0]}
                   onComplete={() => ({ shouldRepeat: true, delay: 0.4 })}
                   size={50}
                   strokeWidth={6}
