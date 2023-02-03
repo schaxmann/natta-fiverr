@@ -27,8 +27,6 @@ import {
   IRemoteAudioTrack,
 } from "agora-rtc-sdk-ng";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import { useRouter } from "next/router";
-import { useBeforeunload } from "react-beforeunload";
 
 type TCreateRoomResponse = {
   room: Room;
@@ -61,12 +59,6 @@ function createRoom(userId: string): Promise<TCreateRoomResponse> {
   }).then((response) => response.json());
 }
 
-function deleteRoom(roomId: string): Promise<TCreateRoomResponse> {
-  return fetch(`/api/rooms/${roomId}`, {
-    method: "DELETE",
-  }).then((response) => response.json());
-}
-
 function getRandomRoom(userId: string): Promise<TGetRandomRoomResponse> {
   return fetch(`/api/rooms?userId=${userId}`).then((response) =>
     response.json()
@@ -83,7 +75,7 @@ function setRoomToWaiting(roomId: string) {
   );
 }
 
-const VideoPlayer = ({
+export const VideoPlayer = ({
   videoTrack,
   style,
 }: {
@@ -107,16 +99,46 @@ const VideoPlayer = ({
   return <div ref={ref} style={style}></div>;
 };
 
-// async function listenForChanges() {
-//   const db = await dbConnect();
-//   const collection = db.collection("rooms");
-//   // Define change stream
-//   const changeStream = collection.watch();
-//   // start listen to changes
-//   changeStream.on("change", function (event: any) {
-//     console.log(JSON.stringify(event));
-//   });
-// }
+async function connectToAgoraRtc(
+  roomId: string,
+  userId: string,
+  onVideoConnect: any,
+  onWebcamStart: any,
+  onAudioConnect: any,
+  token: string
+) {
+  const { default: AgoraRTC } = await import("agora-rtc-sdk-ng");
+
+  const client = AgoraRTC.createClient({
+    mode: "rtc",
+    codec: "vp8",
+  });
+
+  await client.join(
+    process.env.NEXT_PUBLIC_AGORA_APP_ID!,
+    roomId,
+    token,
+    userId
+  );
+
+  client.on("user-published", (themUser, mediaType) => {
+    client.subscribe(themUser, mediaType).then(() => {
+      if (mediaType === "video") {
+        onVideoConnect(themUser.videoTrack);
+      }
+      if (mediaType === "audio") {
+        onAudioConnect(themUser.audioTrack);
+        themUser.audioTrack?.play();
+      }
+    });
+  });
+
+  const tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
+  onWebcamStart(tracks[1]);
+  await client.publish(tracks);
+
+  return { tracks, client };
+}
 
 const AppDemo = (props: any) => {
   const [userId] = useState(parseInt(`${Math.random() * 1e6}`) + "");
@@ -125,80 +147,18 @@ const AppDemo = (props: any) => {
   const [myVideo, setMyVideo] = useState<ICameraVideoTrack>();
   const [themAudio, setThemAudio] = useState<IRemoteAudioTrack>();
   const rtcClientRef = useRef<IAgoraRTCClient>();
-  const [currentQuestion, setCurrentQuestion] = useState({
-    question: "Press play to natta!",
-    questionNo: 0,
-  });
+  const [currentQuestion, setCurrentQuestion] = useState(
+    "Press play to natta!"
+  );
   const [isChatting, setIsChatting] = useState(false);
   const [playDisabled, setPlayDisabled] = useState(false);
   const [stopDisabled, setStopDisabled] = useState(true);
   const [skipQuestion, setSkipQuestion] = useState(false);
-  // const [effectCount, setEffectCount] = useState(0);
+  const [effectCount, setEffectCount] = useState(0);
   const [startTimer, setStartTimer] = useState(false);
-  const [asker, setAsker] = useState(false);
-  const [readyToGo, setReadyToGo] = useState(false);
-  const [userLeft, setUserLeft] = useState(false);
-
-  async function connectToAgoraRtc(
-    roomId: string,
-    userId: string,
-    onVideoConnect: any,
-    onWebcamStart: any,
-    onAudioConnect: any,
-    token: string
-  ) {
-    const { default: AgoraRTC } = await import("agora-rtc-sdk-ng");
-
-    const client = AgoraRTC.createClient({
-      mode: "rtc",
-      codec: "vp8",
-    });
-
-    await client.join(
-      process.env.NEXT_PUBLIC_AGORA_APP_ID!,
-      roomId,
-      token,
-      userId
-    );
-
-    client.on("user-published", (themUser, mediaType) => {
-      client.subscribe(themUser, mediaType).then(() => {
-        if (mediaType === "video") {
-          onVideoConnect(themUser.videoTrack);
-        }
-        if (mediaType === "audio") {
-          onAudioConnect(themUser.audioTrack);
-          themUser.audioTrack?.play();
-        }
-      });
-    });
-
-    const tracks = await AgoraRTC.createMicrophoneAndCameraTracks();
-    onWebcamStart(tracks[1]);
-    await client.publish(tracks);
-
-    client.on("user-left", () => {
-      setUserLeft(true);
-    });
-
-    return { tracks, client };
-  }
-
-  const router = useRouter();
 
   function handleNextClick() {
     connectToARoom();
-  }
-
-  function handleStopClick() {
-    deleteARoom();
-    router.reload();
-  }
-
-  async function deleteARoom() {
-    if (room) {
-      deleteRoom(room._id);
-    }
   }
 
   function handleStartChattingClicked() {
@@ -212,24 +172,11 @@ const AppDemo = (props: any) => {
     setSkipQuestion(!skipQuestion);
   }
 
-  async function handleQuestion(shouldChangeAsker: boolean) {
-    if (shouldChangeAsker) {
-      setAsker(!asker);
-    }
+  async function handleQuestion() {
     const newQ = await getRandomQuestion();
-    setCurrentQuestion({
-      question: newQ[0].question,
-      questionNo: currentQuestion.questionNo + 1,
-    });
+    setStartTimer(true);
+    setCurrentQuestion(newQ[0].question);
   }
-
-  useEffect(() => {
-    console.log(skipQuestion);
-  }, [skipQuestion]);
-
-  // useEffect(() => {
-  //   listenForChanges();
-  // }, []);
 
   async function connectToARoom() {
     setThemAudio(undefined);
@@ -244,7 +191,6 @@ const AppDemo = (props: any) => {
 
     if (rooms.length > 0) {
       setRoom(rooms[0]);
-      // setAsker(false);
 
       const { tracks, client } = await connectToAgoraRtc(
         rooms[0]._id,
@@ -258,7 +204,6 @@ const AppDemo = (props: any) => {
     } else {
       const { room, rtcToken, rtmToken } = await createRoom(userId);
       setRoom(room);
-      setAsker(true);
 
       const { tracks, client } = await connectToAgoraRtc(
         room._id,
@@ -277,83 +222,18 @@ const AppDemo = (props: any) => {
   useEffect(() => {
     if (isChatting) {
       if (!themVideo) {
-        setCurrentQuestion({
-          question: "Waiting for a partner to join...",
-          questionNo: currentQuestion.questionNo + 1,
-        });
+        setCurrentQuestion("Waiting for a partner to join...");
       } else {
-        // if (effectCount == 0) {
-        if (!readyToGo) {
-          console.log("NOT READYYYY DSAJDLKSDJASLKDJDASD");
-          setCurrentQuestion({
-            question: "Let's natta!",
-            questionNo: currentQuestion.questionNo + 1,
-          });
-          setReadyToGo(true);
-          const timeout = setTimeout(() => handleQuestion(false), 1100);
-          return () => {
-            clearTimeout(timeout);
-          };
-        }
-        // }
-        // else {
-        //   setStartTimer(true);
-        //   setTimeout(() => handleQuestion(true), 10000);
-        // }
+        if (effectCount == 0) {
+          setCurrentQuestion("Let's natta!");
+          setEffectCount(effectCount + 1);
+          setTimeout(() => handleQuestion(), 1000);
+        } else handleQuestion();
+        const interval = setInterval(() => handleQuestion(), 10000);
+        return () => clearInterval(interval);
       }
     }
   }, [isChatting, themVideo, skipQuestion]);
-
-  // useEffect(() => {
-  //   if (effectCount == 0) {
-  //     setStartTimer(true);
-  //     setTimeout(() => handleQuestion(true), 1000);
-  //     setEffectCount(effectCount + 1);
-  //   }
-
-  useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => handleQuestion(true), 30100);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [currentQuestion]);
-
-  useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => handleQuestion(true), 30100);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [themVideo]);
-
-  useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => setStartTimer(true), 585);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [readyToGo]);
-
-  useEffect(() => {
-    if (userLeft) {
-      router.reload();
-    }
-  }, [userLeft]);
-
-  // function sortAsker() {
-  //   setAsker(!asker);
-  // }
-
-  // useEffect(() => {
-  //   if (themVideo) {
-  //     const interval = setInterval(() => sortAsker(), 10000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [themVideo]);
 
   // const { runDemo, username } = props;
   // const [webcamStreaming, setWebcamStreaming] = useState(false);
@@ -367,64 +247,57 @@ const AppDemo = (props: any) => {
   // const handleUserMedia = () =>
   //   setTimeout(() => setWebcamStreaming(true), 1_000);
 
-  useBeforeunload(deleteARoom);
-
   return (
     <Flex flexDir="column" align="center">
       <Box width="100%" height="calc(100vh * 0.4)" bg="black">
-        {/* {!webcamStreaming && (
-          <Flex
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.100"
-              color="gray.800"
-              size="xl"
-              position="relative"
-              top="-10"
-            />
-          </Flex>
-        )}
-        {}
-        <Webcam
-          videoConstraints={videoConstraints}
-          mirrored={true}
-          onUserMedia={handleUserMedia}
-          style={{
-            height: "100%",
-            width: "100%",
-            display: !webcamStreaming ? "none" : "block",
-          }}
-        ></Webcam> */}
         <Flex
           width="100%"
           height="100%"
           alignItems="center"
           justifyContent="center"
         >
-          <div
-            className="video-stream"
-            style={{
-              width: "100%",
-              height: "100%",
-            }}
+          <Box
+            className="timer-wrapper"
+            position="relative"
+            // top="61%"
+            // left="38.2%"
+            opacity={1}
+            zIndex={3}
+            alignSelf="flex-start"
+            padding={3}
           >
-            {themVideo && (
-              <VideoPlayer
-                style={{ width: "100%", height: "100%" }}
-                videoTrack={themVideo}
-              />
-            )}
-          </div>
+            {/* {startTimer && ( */}
+            <CountdownCircleTimer
+              isPlaying
+              duration={60}
+              trailColor={"#000000"}
+              colors={["#ffffff", "#ffffff", "#ae0000", "#ae0000"]}
+              colorsTime={[60, 15, 10, 0]}
+              onComplete={() => ({ shouldRepeat: true, delay: 1 })}
+              size={50}
+              strokeWidth={6}
+              trailStrokeWidth={0}
+            ></CountdownCircleTimer>
+            {/* )} */}
+          </Box>
+        </Flex>
+        {/* <NextImage
+            src="/Person_3.jpeg"
+            layout="responsive"
+            height="468px"
+            width="540px"
+          ></NextImage> */}
+        <Flex className="video-stream" height="100%" width="100%">
+          {themVideo && (
+            <VideoPlayer
+              style={{ width: "100%", height: "100%" }}
+              videoTrack={themVideo}
+            />
+          )}
         </Flex>
         <Flex
           width="100%"
-          height="calc(100vh * 0.1)"
+          height="calc(100vh * 0.10)"
           bg="gray.300"
           flexDirection="column"
           justifyContent="flex-end"
@@ -449,7 +322,7 @@ const AppDemo = (props: any) => {
                 "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
             }}
           >
-            {/* <Text
+            <Text
               fontSize="3xl"
               color="white"
               p="1"
@@ -457,30 +330,9 @@ const AppDemo = (props: any) => {
               fontWeight="600"
               position="relative"
               top="0.5rem"
-            ></Text> */}
-            <Box
-              className="timer-wrapper"
-              // top="61%"
-              // left="38.2%"
-              opacity={1}
-              zIndex={3}
-              p="0.2rem"
-              pl="0.75rem"
             >
-              {startTimer && (
-                <CountdownCircleTimer
-                  isPlaying
-                  duration={30}
-                  trailColor={"#000000"}
-                  colors={["#ffffff", "#ffffff", "#ae0000", "#ae0000"]}
-                  colorsTime={[60, 15, 10, 0]}
-                  onComplete={() => ({ shouldRepeat: true, delay: 0.4 })}
-                  size={50}
-                  strokeWidth={6}
-                  trailStrokeWidth={0}
-                ></CountdownCircleTimer>
-              )}
-            </Box>
+              {/* Them */}
+            </Text>
             <ButtonGroup
               size={["xs", "sm", "md"]}
               variant="outline"
@@ -499,7 +351,6 @@ const AppDemo = (props: any) => {
               <Button
                 disabled={stopDisabled}
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
-                onClick={handleStopClick}
               >
                 <MdStop />
               </Button>
@@ -534,65 +385,47 @@ const AppDemo = (props: any) => {
           // maxHeight="300px"
         >
           {/* &quot;If you could live anywhere in the world, but you had to move
-          there tomorrow, where would you go?&quot; */}
-
-          {/* {asker || !isChatting ? (
-            <>{currentQuestion}</>
-          ) : (
-            <>Your partner is asking you a question.</>
-          )} */}
-
-          {!readyToGo ? (
-            <>{currentQuestion.question}</>
-          ) : (
-            <>
-              {!asker ? (
-                <>Your partner is asking a question</>
-              ) : (
-                <>{currentQuestion.question}</>
-              )}
-            </>
-          )}
-          {/* {readyToGo && asker ? (<>{currentQuestion.question}</> ):() <></>)} */}
+            there tomorrow, where would you go?&quot; */}
+          {currentQuestion}
         </Text>
       </Flex>
       <Box width="100%" height="calc(100vh * 0.4)" bg="black">
         {/* {!webcamStreaming && (
-          <Flex
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.100"
-              color="gray.800"
-              size="xl"
-              position="relative"
-              top="-10"
-            />
-          </Flex>
-        )}
-        {}
-        <Webcam
-          videoConstraints={videoConstraints}
-          mirrored={true}
-          onUserMedia={handleUserMedia}
-          style={{
-            height: "100%",
-            width: "100%",
-            display: !webcamStreaming ? "none" : "block",
-          }}
-        ></Webcam> */}
+            <Flex
+              width="100%"
+              height="100%"
+              alignItems="center"
+              justifyContent="center"
+            >
+              <Spinner
+                thickness="4px"
+                speed="0.65s"
+                emptyColor="gray.100"
+                color="gray.800"
+                size="xl"
+                position="relative"
+                top="-10"
+              />
+            </Flex>
+          )}
+          {}
+          <Webcam
+            videoConstraints={videoConstraints}
+            mirrored={true}
+            onUserMedia={handleUserMedia}
+            style={{
+              height: "100%",
+              width: "100%",
+              display: !webcamStreaming ? "none" : "block",
+            }}
+          ></Webcam> */}
         <Flex
           width="100%"
           height="100%"
           alignItems="center"
           justifyContent="center"
         >
-          {/* <Box
+          <Box
             className="timer-wrapper"
             position="relative"
             // top="61%"
@@ -602,7 +435,7 @@ const AppDemo = (props: any) => {
             alignSelf="flex-start"
             padding={3}
           >
-            {startTimer && (
+            {/* {startTimer && ( */}
             <CountdownCircleTimer
               isPlaying
               duration={60}
@@ -614,8 +447,8 @@ const AppDemo = (props: any) => {
               strokeWidth={6}
               trailStrokeWidth={0}
             ></CountdownCircleTimer>
-            )}
-          </Box> */}
+            {/* )} */}
+          </Box>
           <div
             className="video-stream"
             style={{ width: "100%", height: "100%" }}

@@ -2,6 +2,7 @@ import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import "reset-css";
 import Head from "next/head";
 import Homepage from "../components/Homepage";
+import type { AppProps } from "next/app";
 
 const theme = extendTheme({
   colors: {
@@ -43,7 +44,7 @@ const theme = extendTheme({
   },
 });
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Head>

@@ -1,5 +1,6 @@
 import { Box, Flex, Heading, Highlight, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
+import { Image } from "@chakra-ui/react";
 
 const LeftColumn = () => {
   return (
@@ -14,15 +15,15 @@ const LeftColumn = () => {
     >
       <Box pl="3.15rem" pr="7rem">
         <Box position="relative" display="inline" top="15px">
-          <NextImage src="/favicon.ico" width="50px" height="50px"></NextImage>
+          <Image src="/natta-logo.png" width="70%" pb={5}></Image>
         </Box>
-        <Heading lineHeight="tall" fontWeight="800" display="inline">
+        {/* <Heading lineHeight="tall" fontWeight="800" display="inline">
           {" "}
           Natta.
-        </Heading>
+        </Heading> */}
         <Heading lineHeight="tall" fontSize="3xl" pt="10px" pb="1">
           The home of{" "}
-          <Highlight
+          {/* <Highlight
             query={["real"]}
             styles={{
               px: "2",
@@ -34,17 +35,17 @@ const LeftColumn = () => {
               // borderBottom: "solid 4px var(--chakra-colors-gray-800)",
               color: "var(--chakra-colors-gray-800)",
             }}
-          >
-            real conversation.
-          </Highlight>
+          > */}
+          real conversation.
+          {/* </Highlight> */}
         </Heading>
         <Text fontSize="2xl" pt="20px">
           Natta was founded on the fundamental belief that good conversation is
           food for the soul.
         </Text>
-        <Text fontSize="2xl" pt="20px">
-          Our framework exists to facilitate meaningful one-to-one interaction,
-          for those tired of traditional platforms.
+        <Text fontSize="2xl" pt="20px" pb={55}>
+          We facilitate meaningful interaction for users who are tired of
+          antisocial networks.
         </Text>
       </Box>
     </Flex>

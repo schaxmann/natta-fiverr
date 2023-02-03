@@ -18,11 +18,14 @@ const AppView = () => {
       bg="black"
       boxShadow="xl"
     >
-      {!runDemo ? (
+      {/* {!runDemo ? (
         <Launch setRunDemo={setRunDemo} setUsername={setUsername} />
-      ) : (
-        <AppDemo runDemo={runDemo} username={username} />
-      )}
+      ) : ( */}
+      <AppDemo
+        runDemo={runDemo}
+        // username={username}
+      />
+      {/* )} */}
     </Box>
   );
 };
