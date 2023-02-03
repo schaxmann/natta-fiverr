@@ -1,7 +1,7 @@
 import { Button, Flex, Input } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
-const Launch = (props) => {
+const Launch = (props: any) => {
   const { setRunDemo, setUsername } = props;
   const [firstNameInput, setFirstNameInput] = useState("");
   const [lastNameInput, setLastNameInput] = useState("");
