@@ -16,10 +16,7 @@ import {
   MdStop,
 } from "react-icons/md";
 import { TbArrowsDoubleNeSw } from "react-icons/tb";
-import { RiAccountPinBoxLine } from "react-icons/ri";
-import NextImage from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Webcam from "react-webcam";
 import {
   ICameraVideoTrack,
   IRemoteVideoTrack,
