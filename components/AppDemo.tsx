@@ -26,6 +26,9 @@ import {
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import { useRouter } from "next/router";
 import { useBeforeunload } from "react-beforeunload";
+import io from "socket.io-client";
+
+let socket: any;
 
 type TCreateRoomResponse = {
   room: Room;
@@ -68,6 +71,12 @@ function getRandomRoom(userId: string): Promise<TGetRandomRoomResponse> {
   return fetch(`/api/rooms?userId=${userId}`).then((response) =>
     response.json()
   );
+}
+
+function setQuestionDb(roomId: string, questionId: string): any {
+  return fetch(`/api/rooms?roomId=${roomId}&questionId=${questionId}`, {
+    method: "PUT",
+  }).then((response) => response.json());
 }
 
 function getRandomQuestion(): any {
@@ -129,12 +138,85 @@ const AppDemo = (props: any) => {
   const [isChatting, setIsChatting] = useState(false);
   const [playDisabled, setPlayDisabled] = useState(false);
   const [stopDisabled, setStopDisabled] = useState(true);
-  const [skipQuestion, setSkipQuestion] = useState(false);
-  // const [effectCount, setEffectCount] = useState(0);
+  const [skipDisabled, setSkipDisabled] = useState(true);
+  const [reverseDisabled, setReverseDisabled] = useState(true);
+  const [freeDisabled, setFreeDisabled] = useState(true);
   const [startTimer, setStartTimer] = useState(false);
   const [asker, setAsker] = useState(false);
   const [readyToGo, setReadyToGo] = useState(false);
   const [userLeft, setUserLeft] = useState(false);
+  const [skip, setSkip] = useState(false);
+  const [reverse, setReverse] = useState(false);
+  const [free, setFree] = useState(false);
+  const [timerKey, setTimerKey] = useState(0);
+  const [emittedQuestion, setEmittedQuestion] = useState({
+    question: "",
+    questionNo: 0,
+  });
+
+  useEffect(() => {
+    if (isChatting) {
+      socketInitializer();
+      return () => {
+        socket.disconnect();
+      };
+    }
+  }, [isChatting]);
+
+  useEffect(() => {
+    if (readyToGo && asker) {
+      setFreeDisabled(false);
+      setSkipDisabled(true);
+      setReverseDisabled(true);
+    } else if (readyToGo && !asker) {
+      setFreeDisabled(true);
+      setSkipDisabled(false);
+      setReverseDisabled(false);
+    }
+  }, [asker, readyToGo]);
+
+  async function socketInitializer() {
+    await fetch("/api/socket");
+
+    socket = io();
+
+    socket.on("receive-message", (data: any) => {
+      console.log(data);
+      if (data.message == "skipQ") setSkip(true);
+      else if (data.message == "reverseQ") {
+        setReverse(true);
+      } else if (data.message == "emitQuestion") emittedQHandler(data.question);
+      else if (data.message == "freeQ") setFree(true);
+    });
+  }
+
+  function handleSocket(button: string) {
+    if (isChatting) {
+      socket.emit("send-message", {
+        message: button,
+      });
+    }
+  }
+
+  // function emitQ() {
+  //   socket.emit("send-message", {
+  //     message: "emitQuestion",
+  //     question: currentQuestion,
+  //   });
+  // }
+
+  useEffect(() => {
+    if (reverse) {
+      socket.emit("send-message", {
+        message: "emitQuestion",
+        question: currentQuestion,
+      });
+    }
+  }, [currentQuestion, reverse]);
+
+  function emittedQHandler(emittedQ: any) {
+    setCurrentQuestion(emittedQ);
+  }
 
   async function connectToAgoraRtc(
     roomId: string,
@@ -183,10 +265,6 @@ const AppDemo = (props: any) => {
 
   const router = useRouter();
 
-  function handleNextClick() {
-    connectToARoom();
-  }
-
   function handleStopClick() {
     deleteARoom();
     router.reload();
@@ -205,28 +283,27 @@ const AppDemo = (props: any) => {
     setStopDisabled(false);
   }
 
-  function handleSkipQuestion() {
-    setSkipQuestion(!skipQuestion);
-  }
-
   async function handleQuestion(shouldChangeAsker: boolean) {
-    if (shouldChangeAsker) {
-      setAsker(!asker);
-    }
     const newQ = await getRandomQuestion();
     setCurrentQuestion({
       question: newQ[0].question,
       questionNo: currentQuestion.questionNo + 1,
     });
+    if (shouldChangeAsker) {
+      setAsker(!asker);
+    }
   }
 
-  useEffect(() => {
-    console.log(skipQuestion);
-  }, [skipQuestion]);
-
-  // useEffect(() => {
-  //   listenForChanges();
-  // }, []);
+  async function handleSkipQuestion(shouldChangeAsker: boolean) {
+    const newQ = await getRandomQuestion();
+    setCurrentQuestion({
+      question: newQ[0].question,
+      questionNo: currentQuestion.questionNo + 1,
+    });
+    if (shouldChangeAsker) {
+      setAsker(!asker);
+    }
+  }
 
   async function connectToARoom() {
     setThemAudio(undefined);
@@ -280,60 +357,65 @@ const AppDemo = (props: any) => {
         });
       } else {
         // if (effectCount == 0) {
-        if (!readyToGo) {
-          console.log("NOT READYYYY DSAJDLKSDJASLKDJDASD");
-          setCurrentQuestion({
-            question: "Let's natta!",
-            questionNo: currentQuestion.questionNo + 1,
-          });
-          setReadyToGo(true);
-          const timeout = setTimeout(() => handleQuestion(false), 1100);
-          return () => {
-            clearTimeout(timeout);
-          };
-        }
-        // }
-        // else {
-        //   setStartTimer(true);
-        //   setTimeout(() => handleQuestion(true), 10000);
-        // }
+        // if (!readyToGo) {
+        //   setCurrentQuestion({
+        //     question: "Let's natta!",
+        //     questionNo: currentQuestion.questionNo + 1,
+        //   });
+        setReadyToGo(true);
+        handleQuestion(false);
+        // const timeout = setTimeout(() => handleQuestion(false), 1100);
+        // return () => {
+        //   clearTimeout(timeout);
+        // };
       }
     }
-  }, [isChatting, themVideo, skipQuestion]);
+  }, [isChatting, themVideo]);
+
+  useEffect(() => {
+    if (skip) {
+      handleSkipQuestion(false);
+      setSkip(false);
+    } else if (reverse) {
+      setAsker(!asker);
+      setReverse(false);
+      setCurrentQuestion(emittedQuestion);
+    } else if (free) {
+      setCurrentQuestion({
+        question: "Ask anything that your heart desires!",
+        questionNo: currentQuestion.questionNo + 1,
+      });
+      setFree(false);
+    } else if (readyToGo) {
+      const timeout = setTimeout(() => handleQuestion(true), 60000);
+      return () => {
+        clearTimeout(timeout);
+      };
+    }
+  }, [currentQuestion, skip, reverse, free]);
 
   // useEffect(() => {
-  //   if (effectCount == 0) {
-  //     setStartTimer(true);
-  //     setTimeout(() => handleQuestion(true), 1000);
-  //     setEffectCount(effectCount + 1);
+  //   if (readyToGo && room && asker) {
+  //     setQuestionDb(room._id, currentQuestion.questionNo.toString());
   //   }
+  // }, [currentQuestion]);
+
+  // useEffect(() => {
+  //   if (readyToGo) {
+  //     const timeout = setTimeout(() => handleQuestion(true), 30100);
+  //     return () => {
+  //       clearTimeout(timeout);
+  //     };
+  //   }
+  // }, [themVideo]);
 
   useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => handleQuestion(true), 30100);
-      return () => {
-        clearTimeout(timeout);
-      };
+    if ((readyToGo && skip) || (readyToGo && reverse) || (readyToGo && free)) {
+      setTimerKey(timerKey + 1);
+    } else if (readyToGo) {
+      setTimeout(() => setStartTimer(true), 200);
     }
-  }, [currentQuestion]);
-
-  useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => handleQuestion(true), 30100);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [themVideo]);
-
-  useEffect(() => {
-    if (readyToGo) {
-      const timeout = setTimeout(() => setStartTimer(true), 585);
-      return () => {
-        clearTimeout(timeout);
-      };
-    }
-  }, [readyToGo]);
+  }, [readyToGo, skip, reverse, free]);
 
   useEffect(() => {
     if (userLeft) {
@@ -341,63 +423,11 @@ const AppDemo = (props: any) => {
     }
   }, [userLeft]);
 
-  // function sortAsker() {
-  //   setAsker(!asker);
-  // }
-
-  // useEffect(() => {
-  //   if (themVideo) {
-  //     const interval = setInterval(() => sortAsker(), 10000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [themVideo]);
-
-  // const { runDemo, username } = props;
-  // const [webcamStreaming, setWebcamStreaming] = useState(false);
-
-  // const videoConstraints = {
-  //   width: 540,
-  //   height: 468,
-  //   facingMode: "user",
-  // };
-
-  // const handleUserMedia = () =>
-  //   setTimeout(() => setWebcamStreaming(true), 1_000);
-
   useBeforeunload(deleteARoom);
 
   return (
     <Flex flexDir="column" align="center">
       <Box width="100%" height="calc(100vh * 0.4)" bg="black">
-        {/* {!webcamStreaming && (
-          <Flex
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.100"
-              color="gray.800"
-              size="xl"
-              position="relative"
-              top="-10"
-            />
-          </Flex>
-        )}
-        {}
-        <Webcam
-          videoConstraints={videoConstraints}
-          mirrored={true}
-          onUserMedia={handleUserMedia}
-          style={{
-            height: "100%",
-            width: "100%",
-            display: !webcamStreaming ? "none" : "block",
-          }}
-        ></Webcam> */}
         <Flex
           width="100%"
           height="100%"
@@ -446,15 +476,6 @@ const AppDemo = (props: any) => {
                 "linear-gradient(to top, rgb(0,0,0,0.7), rgb(0,0,0,0))",
             }}
           >
-            {/* <Text
-              fontSize="3xl"
-              color="white"
-              p="1"
-              pl="3"
-              fontWeight="600"
-              position="relative"
-              top="0.5rem"
-            ></Text> */}
             <Box
               className="timer-wrapper"
               // top="61%"
@@ -467,11 +488,12 @@ const AppDemo = (props: any) => {
               {startTimer && (
                 <CountdownCircleTimer
                   isPlaying
-                  duration={30}
+                  key={timerKey}
+                  duration={60}
                   trailColor={"#000000"}
                   colors={["#ffffff", "#ffffff", "#ae0000", "#ae0000"]}
-                  colorsTime={[30, 7, 5, 0]}
-                  onComplete={() => ({ shouldRepeat: true, delay: 0.4 })}
+                  colorsTime={[60, 10, 5, 0]}
+                  onComplete={() => ({ shouldRepeat: true, delay: 0 })}
                   size={50}
                   strokeWidth={6}
                   trailStrokeWidth={0}
@@ -527,18 +549,7 @@ const AppDemo = (props: any) => {
           fontWeight="600"
           paddingBottom="3px"
           zIndex={2}
-          // minHeight="100px"
-          // maxHeight="300px"
         >
-          {/* &quot;If you could live anywhere in the world, but you had to move
-          there tomorrow, where would you go?&quot; */}
-
-          {/* {asker || !isChatting ? (
-            <>{currentQuestion}</>
-          ) : (
-            <>Your partner is asking you a question.</>
-          )} */}
-
           {!readyToGo ? (
             <>{currentQuestion.question}</>
           ) : (
@@ -550,69 +561,15 @@ const AppDemo = (props: any) => {
               )}
             </>
           )}
-          {/* {readyToGo && asker ? (<>{currentQuestion.question}</> ):() <></>)} */}
         </Text>
       </Flex>
       <Box width="100%" height="calc(100vh * 0.4)" bg="black">
-        {/* {!webcamStreaming && (
-          <Flex
-            width="100%"
-            height="100%"
-            alignItems="center"
-            justifyContent="center"
-          >
-            <Spinner
-              thickness="4px"
-              speed="0.65s"
-              emptyColor="gray.100"
-              color="gray.800"
-              size="xl"
-              position="relative"
-              top="-10"
-            />
-          </Flex>
-        )}
-        {}
-        <Webcam
-          videoConstraints={videoConstraints}
-          mirrored={true}
-          onUserMedia={handleUserMedia}
-          style={{
-            height: "100%",
-            width: "100%",
-            display: !webcamStreaming ? "none" : "block",
-          }}
-        ></Webcam> */}
         <Flex
           width="100%"
           height="100%"
           alignItems="center"
           justifyContent="center"
         >
-          {/* <Box
-            className="timer-wrapper"
-            position="relative"
-            // top="61%"
-            // left="38.2%"
-            opacity={1}
-            zIndex={3}
-            alignSelf="flex-start"
-            padding={3}
-          >
-            {startTimer && (
-            <CountdownCircleTimer
-              isPlaying
-              duration={60}
-              trailColor={"#000000"}
-              colors={["#ffffff", "#ffffff", "#ae0000", "#ae0000"]}
-              colorsTime={[60, 15, 10, 0]}
-              onComplete={() => ({ shouldRepeat: true, delay: 1 })}
-              size={50}
-              strokeWidth={6}
-              trailStrokeWidth={0}
-            ></CountdownCircleTimer>
-            )}
-          </Box> */}
           <div
             className="video-stream"
             style={{ width: "100%", height: "100%" }}
@@ -672,18 +629,26 @@ const AppDemo = (props: any) => {
               pr="0.75rem"
             >
               <Button
+                id="reverseQ"
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
+                onClick={() => handleSocket("reverseQ")}
+                disabled={reverseDisabled}
               >
                 <TbArrowsDoubleNeSw className="icon" />
               </Button>
               <Button
+                id="skipQ"
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
-                onClick={handleSkipQuestion}
+                onClick={() => handleSocket("skipQ")}
+                disabled={skipDisabled}
               >
                 <MdOutlineSkipNext />
               </Button>
               <Button
+                id="freeQ"
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
+                onClick={() => handleSocket("freeQ")}
+                disabled={freeDisabled}
               >
                 <MdOutlineQuestionAnswer />
               </Button>

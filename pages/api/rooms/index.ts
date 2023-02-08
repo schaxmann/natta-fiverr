@@ -56,8 +56,17 @@ export default async function handler(
 ) {
   const { method, query } = req;
   const userId = query.userId as string;
+  const roomId = query.roomId as string;
+  const questionId = query.questionId as string;
 
   await dbConnect();
+
+  // let latestChange = {};
+
+  // Room.watch().on("change", (data: any) => {
+  //   if (data.operationType == "update")
+  //     console.log(data.updateDescription.updatedFields);
+  // });
 
   switch (method) {
     case "GET":
@@ -92,6 +101,14 @@ export default async function handler(
         rtcToken: getRtcToken(room._id.toString(), userId),
         rtmToken: getRtmToken(userId),
       });
+      break;
+    case "PUT":
+      // console.log(questionId);
+      // console.log(roomId);
+      await Room.findByIdAndUpdate(roomId, {
+        currentQ: questionId,
+      });
+      res.status(200).json("success");
       break;
     default:
       res.status(400).json("no method for this endpoint");

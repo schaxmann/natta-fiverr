@@ -56,6 +56,7 @@ export default async function handler(
 ) {
   const { method, query } = req;
   const roomId = query.roomId as string;
+  const questionId = query.questionId as string;
 
   await dbConnect();
 
