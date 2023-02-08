@@ -178,7 +178,7 @@ const AppDemo = (props: any) => {
   async function socketInitializer() {
     await fetch("/api/socket");
 
-    socket = io();
+    socket = io("/");
 
     socket.on("receive-message", (data: any) => {
       console.log(data);
