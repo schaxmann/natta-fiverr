@@ -6,6 +6,7 @@ import {
   Text,
   Input,
   Spinner,
+  Tooltip,
 } from "@chakra-ui/react";
 import {
   MdMoreTime,
@@ -628,30 +629,65 @@ const AppDemo = (props: any) => {
               p="0.2rem"
               pr="0.75rem"
             >
-              <Button
-                id="reverseQ"
-                _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
-                onClick={() => handleSocket("reverseQ")}
-                disabled={reverseDisabled}
+              <Tooltip
+                label="Return Question"
+                fontSize="sm"
+                placement="top-start"
+                bg="rgba(255,255,255,0.4)"
+                color="black"
               >
-                <TbArrowsDoubleNeSw className="icon" />
-              </Button>
-              <Button
-                id="skipQ"
-                _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
-                onClick={() => handleSocket("skipQ")}
-                disabled={skipDisabled}
+                <Button
+                  id="reverseQ"
+                  _hover={{
+                    color: "black",
+                    bg: "#f4f4f5",
+                    borderColor: "white",
+                  }}
+                  onClick={() => handleSocket("reverseQ")}
+                  disabled={reverseDisabled}
+                >
+                  <TbArrowsDoubleNeSw className="icon" />
+                </Button>
+              </Tooltip>
+              <Tooltip
+                label="Skip Question"
+                fontSize="sm"
+                bg="rgba(255,255,255,0.4)"
+                color="black"
               >
-                <MdOutlineSkipNext />
-              </Button>
-              <Button
-                id="freeQ"
-                _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
-                onClick={() => handleSocket("freeQ")}
-                disabled={freeDisabled}
+                <Button
+                  id="skipQ"
+                  _hover={{
+                    color: "black",
+                    bg: "#f4f4f5",
+                    borderColor: "white",
+                  }}
+                  onClick={() => handleSocket("skipQ")}
+                  disabled={skipDisabled}
+                >
+                  <MdOutlineSkipNext />
+                </Button>
+              </Tooltip>
+              <Tooltip
+                label="Free Question"
+                fontSize="sm"
+                placement="top-end"
+                bg="rgba(255,255,255,0.4)"
+                color="black"
               >
-                <MdOutlineQuestionAnswer />
-              </Button>
+                <Button
+                  id="freeQ"
+                  _hover={{
+                    color: "black",
+                    bg: "#f4f4f5",
+                    borderColor: "white",
+                  }}
+                  onClick={() => handleSocket("freeQ")}
+                  disabled={freeDisabled}
+                >
+                  <MdOutlineQuestionAnswer />
+                </Button>
+              </Tooltip>
             </ButtonGroup>
           </Flex>
         </Flex>
