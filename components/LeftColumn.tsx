@@ -4,7 +4,7 @@ import { Image } from "@chakra-ui/react";
 
 const LeftColumn = () => {
   return (
-    <Flex flex="1" id="leftColumn" alignItems="center">
+    <Flex p={{ base: 4, md: 0 }} flex="1" id="leftColumn" alignItems="center">
       <Stack spacing={5}>
         <Image src="/natta-logo.png" maxW="70%" alt="logo" />
         {/* <Heading lineHeight="tall" fontWeight="800" display="inline">
@@ -15,7 +15,7 @@ const LeftColumn = () => {
           fontWeight="800"
           pt="1"
           lineHeight="tall"
-          fontSize={{ md: "2xl", xl: "3xl" }}
+          fontSize={{ base: "2xl", xl: "3xl" }}
         >
           The home of{" "}
           {/* <Highlight
@@ -34,12 +34,12 @@ const LeftColumn = () => {
           real conversation.
           {/* </Highlight> */}
         </Heading>
-        <Stack spacing="2">
-          <Text fontSize={{ md: "xl", xl: "2xl" }}>
+        <Stack spacing="2" fontSize={{ base: "xl", xl: "2xl" }}>
+          <Text>
             Natta was founded on the fundamental belief that good conversation
             is food for the soul.
           </Text>
-          <Text fontSize={{ md: "xl", xl: "2xl" }}>
+          <Text>
             We facilitate meaningful interaction for users who are tired of
             antisocial networks.
           </Text>

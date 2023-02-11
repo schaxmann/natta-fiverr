@@ -9,9 +9,8 @@ const Homepage = () => {
       px={{ md: "8", xl: "16" }}
       gap={{ md: "4rem", xl: "6rem" }}
       as="main"
-      height="100vh"
-      width="100vw"
       justify="center"
+      flexDir={{ base: "column", md: "row" }}
     >
       <LeftColumn />
       <AppView />
