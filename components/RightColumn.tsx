@@ -21,7 +21,7 @@ const RightColumn = () => {
       </Flex>
       <Stack
         spacing={4}
-        textAlign={{ md: "end" }}
+        textAlign={{ xl: "end" }}
         fontSize={{ base: "xl", xl: "2xl" }}
       >
         <Heading fontSize={{ base: "2xl", xl: "3xl" }} fontWeight="800">

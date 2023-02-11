@@ -554,13 +554,13 @@ const AppDemo = (props: any) => {
           zIndex={2}
         >
           {!readyToGo ? (
-            <>{currentQuestion.question}</>
+            <Text fontSize="xl">{currentQuestion.question}</Text>
           ) : (
             <>
               {!asker ? (
-                <>Your partner is asking a question</>
+                <Text fontSize="xl">Your partner is asking a question</Text>
               ) : (
-                <>{currentQuestion.question}</>
+                <Text fontSize="xl">{currentQuestion.question}</Text>
               )}
             </>
           )}
