@@ -1,4 +1,4 @@
-import { Container, Flex } from "@chakra-ui/react";
+import { Box, Container, Flex, Center, Stack } from "@chakra-ui/react";
 import LeftColumn from "./LeftColumn";
 import AppView from "./AppView";
 import RightColumn from "./RightColumn";
@@ -12,9 +12,16 @@ const Homepage = () => {
       justify="center"
       flexDir={{ base: "column", md: "row" }}
     >
-      <LeftColumn />
+      <Stack flex="1">
+        <LeftColumn />
+        <Box display={{ base: "none", md: "block", xl: "none" }}>
+          <RightColumn />
+        </Box>
+      </Stack>
       <AppView />
-      <RightColumn />
+      <Center flex="1" display={{ base: "flex", md: "none", xl: "flex" }}>
+        <RightColumn />
+      </Center>
     </Flex>
   );
 };
