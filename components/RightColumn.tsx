@@ -1,53 +1,39 @@
-import { Box, Heading, Text, Flex, Switch } from "@chakra-ui/react";
+import {
+  Box,
+  Heading,
+  Text,
+  Flex,
+  Switch,
+  Stack,
+  Center,
+} from "@chakra-ui/react";
 import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 const RightColumn = () => {
   return (
-    <Flex
-      id="rightColumn"
-      height="100vh"
-      flexDir="column"
-      maxWidth="calc(50vw - 50vh * 9 / 19.5)"
-      flexGrow="1"
-      bg="white"
-      alignItems="center"
-    >
-      <Flex flexGrow="1" height="calc(100vh / 3)">
+    <Center flex="1" p={{ base: 4, md: 0 }}>
+      <Flex height="calc(100vh / 3)">
         {/* <Flex position="absolute" right="10" top="8" gap="3">
           <MdLightMode style={{ marginTop: "2px" }} />
           <Switch colorScheme="darkMode"></Switch>
           <MdDarkMode style={{ marginTop: "2px" }} />
         </Flex> */}
       </Flex>
-      <Flex
-        flexDir="column"
-        flexGrow="1"
-        pr="3.15rem"
-        pl="10rem"
-        height="calc(100vh / 3)"
-        justifyContent="center"
+      <Stack
+        spacing={4}
+        textAlign={{ md: "end" }}
+        fontSize={{ base: "xl", xl: "2xl" }}
       >
-        <Heading
-          fontSize="3xl"
-          textAlign="right"
-          fontWeight="800"
-          pt={16}
-          pb="1"
-        >
+        <Heading fontSize={{ base: "2xl", xl: "3xl" }} fontWeight="800">
           Feedback:
         </Heading>
-        <Text fontSize="2xl" textAlign="right" pt="20px">
+        <Text>
           Whether you rate us or want to slate us, your opinion matters to our
           team.
         </Text>
-        <Text fontSize="2xl" textAlign="right" pt="20px">
-          *Feedback form pending...*
-        </Text>
-      </Flex>
-      <Flex flexGrow="1" height="calc(100vh / 3)">
-        <Box></Box>
-      </Flex>
-    </Flex>
+        <Text>*Feedback form pending...*</Text>
+      </Stack>
+    </Center>
   );
 };
 

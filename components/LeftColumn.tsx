@@ -1,27 +1,22 @@
-import { Box, Flex, Heading, Highlight, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Highlight, Stack, Text } from "@chakra-ui/react";
 import NextImage from "next/image";
 import { Image } from "@chakra-ui/react";
 
 const LeftColumn = () => {
   return (
-    <Flex
-      id="leftColumn"
-      height="100vh"
-      maxWidth="calc(50vw - 50vh * 9 / 19.5)"
-      flexGrow="1"
-      bg="white"
-      flexDirection="row"
-      alignItems="center"
-    >
-      <Box pl="3.15rem" pr="7rem">
-        <Box position="relative" display="inline" top="15px">
-          <Image src="/natta-logo.png" width="70%" pb={5}></Image>
-        </Box>
+    <Flex p={{ base: 4, md: 0 }} flex="1" id="leftColumn" alignItems="center">
+      <Stack spacing={5}>
+        <Image src="/natta-logo.png" maxW="70%" alt="logo" />
         {/* <Heading lineHeight="tall" fontWeight="800" display="inline">
           {" "}
           Natta.
         </Heading> */}
-        <Heading lineHeight="tall" fontSize="3xl" pt="10px" pb="1">
+        <Heading
+          fontWeight="800"
+          pt="1"
+          lineHeight="tall"
+          fontSize={{ base: "2xl", xl: "3xl" }}
+        >
           The home of{" "}
           {/* <Highlight
             query={["real"]}
@@ -39,15 +34,17 @@ const LeftColumn = () => {
           real conversation.
           {/* </Highlight> */}
         </Heading>
-        <Text fontSize="2xl" pt="20px">
-          Natta was founded on the fundamental belief that good conversation is
-          food for the soul.
-        </Text>
-        <Text fontSize="2xl" pt="20px" pb={55}>
-          We facilitate meaningful interaction for users who are tired of
-          antisocial networks.
-        </Text>
-      </Box>
+        <Stack spacing="2" fontSize={{ base: "xl", xl: "2xl" }}>
+          <Text>
+            Natta was founded on the fundamental belief that good conversation
+            is food for the soul.
+          </Text>
+          <Text>
+            We facilitate meaningful interaction for users who are tired of
+            antisocial networks.
+          </Text>
+        </Stack>
+      </Stack>
     </Flex>
   );
 };
