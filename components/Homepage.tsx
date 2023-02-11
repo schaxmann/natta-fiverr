@@ -1,23 +1,22 @@
-import { Flex } from "@chakra-ui/react";
+import { Container, Flex } from "@chakra-ui/react";
 import LeftColumn from "./LeftColumn";
 import AppView from "./AppView";
 import RightColumn from "./RightColumn";
 
 const Homepage = () => {
   return (
-    <main>
-      <Flex
-        position="absolute"
-        height="100vh"
-        width="100vw"
-        justify="center"
-        justifyContent="space-between"
-      >
-        <LeftColumn />
-        <AppView />
-        <RightColumn />
-      </Flex>
-    </main>
+    <Flex
+      px={{ md: "8", xl: "16" }}
+      gap={{ md: "4rem", xl: "6rem" }}
+      as="main"
+      height="100vh"
+      width="100vw"
+      justify="center"
+    >
+      <LeftColumn />
+      <AppView />
+      <RightColumn />
+    </Flex>
   );
 };
 
