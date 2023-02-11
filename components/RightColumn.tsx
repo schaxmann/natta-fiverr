@@ -11,7 +11,11 @@ import { MdDarkMode, MdLightMode } from "react-icons/md";
 
 const RightColumn = () => {
   return (
-    <Center flex="1" p={{ base: 4, md: 0 }}>
+    <Center
+      minH={{ base: "100dvh", md: "auto" }}
+      flex="1"
+      p={{ base: 4, md: 0 }}
+    >
       <Flex height="calc(100vh / 3)">
         {/* <Flex position="absolute" right="10" top="8" gap="3">
           <MdLightMode style={{ marginTop: "2px" }} />
@@ -21,7 +25,7 @@ const RightColumn = () => {
       </Flex>
       <Stack
         spacing={4}
-        textAlign={{ md: "end" }}
+        textAlign={{ xl: "end" }}
         fontSize={{ base: "xl", xl: "2xl" }}
       >
         <Heading fontSize={{ base: "2xl", xl: "3xl" }} fontWeight="800">

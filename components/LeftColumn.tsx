@@ -4,7 +4,13 @@ import { Image } from "@chakra-ui/react";
 
 const LeftColumn = () => {
   return (
-    <Flex p={{ base: 4, md: 0 }} flex="1" id="leftColumn" alignItems="center">
+    <Flex
+      minH={{ base: "100dvh", md: "auto" }}
+      p={{ base: 4, md: 0 }}
+      flex="1"
+      id="leftColumn"
+      alignItems="center"
+    >
       <Stack spacing={5}>
         <Image src="/natta-logo.png" maxW="70%" alt="logo" />
         {/* <Heading lineHeight="tall" fontWeight="800" display="inline">
