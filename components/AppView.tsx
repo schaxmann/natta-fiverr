@@ -1,6 +1,5 @@
 import { Box } from "@chakra-ui/react";
 import { useRef, useState } from "react";
-import Launch from "./Launch";
 import AppDemo from "./AppDemo";
 
 const AppView = () => {
@@ -18,14 +17,7 @@ const AppView = () => {
       bg="black"
       boxShadow="xl"
     >
-      {/* {!runDemo ? (
-        <Launch setRunDemo={setRunDemo} setUsername={setUsername} />
-      ) : ( */}
-      <AppDemo
-        runDemo={runDemo}
-        // username={username}
-      />
-      {/* )} */}
+      <AppDemo runDemo={runDemo} />
     </Box>
   );
 };

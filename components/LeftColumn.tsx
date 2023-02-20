@@ -17,27 +17,8 @@ const LeftColumn = () => {
         <Box position="relative" display="inline" top="15px">
           <Image src="/natta-logo.png" width="70%" pb={5}></Image>
         </Box>
-        {/* <Heading lineHeight="tall" fontWeight="800" display="inline">
-          {" "}
-          Natta.
-        </Heading> */}
         <Heading lineHeight="tall" fontSize="3xl" pt="10px" pb="1">
-          The home of{" "}
-          {/* <Highlight
-            query={["real"]}
-            styles={{
-              px: "2",
-              py: "1",
-              rounded: "full",
-              bg: "whatsapp.50",
-              // outline: "3px solid red",
-              // textDecoration: "underline",
-              // borderBottom: "solid 4px var(--chakra-colors-gray-800)",
-              color: "var(--chakra-colors-gray-800)",
-            }}
-          > */}
-          real conversation.
-          {/* </Highlight> */}
+          The home of real conversation.
         </Heading>
         <Text fontSize="2xl" pt="20px">
           Natta was founded on the fundamental belief that good conversation is
