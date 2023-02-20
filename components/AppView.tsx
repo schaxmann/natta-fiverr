@@ -11,9 +11,9 @@ const AppView = () => {
 
   return (
     <Box
+      scrollSnapAlign="center"
       id="boundingBox"
-      height="100vh"
-      width="calc(100vh * (9/19.5))"
+      // width="calc(100vh * (9/19.5))"
       minWidth="calc(100vh * (9/19.5))"
       bg="black"
       boxShadow="xl"

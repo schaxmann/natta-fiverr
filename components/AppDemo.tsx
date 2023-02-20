@@ -510,6 +510,7 @@ const AppDemo = (props: any) => {
               pr="0.75rem"
             >
               <Button
+                size={{ base: "md", lg: "lg" }}
                 onClick={handleStartChattingClicked}
                 disabled={playDisabled}
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
@@ -517,13 +518,14 @@ const AppDemo = (props: any) => {
                 <MdPlayArrow />
               </Button>
               <Button
+                size={{ base: "md", lg: "lg" }}
                 disabled={stopDisabled}
                 _hover={{ color: "black", bg: "#f4f4f5", borderColor: "white" }}
                 onClick={handleStopClick}
               >
                 <MdStop />
               </Button>
-              <Button colorScheme="red">
+              <Button size={{ base: "md", lg: "lg" }} colorScheme="red">
                 <MdOutlinedFlag />
               </Button>
             </ButtonGroup>
@@ -552,13 +554,13 @@ const AppDemo = (props: any) => {
           zIndex={2}
         >
           {!readyToGo ? (
-            <>{currentQuestion.question}</>
+            <Text fontSize="xl">{currentQuestion.question}</Text>
           ) : (
             <>
               {!asker ? (
-                <>Your partner is asking a question</>
+                <Text fontSize="xl">Your partner is asking a question</Text>
               ) : (
-                <>{currentQuestion.question}</>
+                <Text fontSize="xl">{currentQuestion.question}</Text>
               )}
             </>
           )}
@@ -637,6 +639,7 @@ const AppDemo = (props: any) => {
                 color="black"
               >
                 <Button
+                  size={{ base: "md", lg: "lg" }}
                   id="reverseQ"
                   _hover={{
                     color: "black",
@@ -656,6 +659,7 @@ const AppDemo = (props: any) => {
                 color="black"
               >
                 <Button
+                  size={{ base: "md", lg: "lg" }}
                   id="skipQ"
                   _hover={{
                     color: "black",
@@ -676,6 +680,7 @@ const AppDemo = (props: any) => {
                 color="black"
               >
                 <Button
+                  size={{ base: "md", lg: "lg" }}
                   id="freeQ"
                   _hover={{
                     color: "black",
