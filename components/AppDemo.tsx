@@ -538,8 +538,9 @@ const AppDemo = (props: any) => {
         bg="white"
         flexDirection="column"
         justifyContent="center"
+        alignContent="center"
       >
-        <Text
+        <Box
           // fontSize="2xl"
           fontSize={{
             base: "12px",
@@ -550,8 +551,10 @@ const AppDemo = (props: any) => {
           }}
           textAlign="center"
           fontWeight="600"
-          paddingBottom="3px"
           zIndex={2}
+          pt={1}
+          maxWidth="400px"
+          margin="auto"
         >
           {!readyToGo ? (
             <Text fontSize="xl">{currentQuestion.question}</Text>
@@ -564,7 +567,7 @@ const AppDemo = (props: any) => {
               )}
             </>
           )}
-        </Text>
+        </Box>
       </Flex>
       <Box width="100%" height="calc(100vh * 0.4)" bg="black">
         <Flex
