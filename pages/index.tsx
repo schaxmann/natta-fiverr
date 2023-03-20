@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
 import Image from "next/image";
+import { useState } from "react";
 
 export const MainBody = styled.div`
   width: 100vw;
@@ -116,6 +117,8 @@ export const InputWrapper = styled.div`
   order:5;
   width:61vw;
   height:40px;
+  height: 9.6vw;
+
 
   @media (min-width: 769px) {
     display:flex;
@@ -140,9 +143,11 @@ export const JoinUs = styled.button`
   color: white;
   order: 6;
   height: 40px;
+  height: 9.6vw;
   width: 61vw;
   margin-top: 20px;
   font-size: 18px;
+  font-size: 4.6vw;
   @media (min-width: 769px) {
     position: absolute;
     width: 18vw;
@@ -164,6 +169,7 @@ export const JoinUs = styled.button`
 export const InputTest = styled.input`
   width: 100%;
   height: 40px;
+  height: 9.6vw;
   padding: 8px;
   padding: 0.2vh;
   padding-top: 10px;
@@ -174,6 +180,7 @@ export const InputTest = styled.input`
   font-family: "Roc-Grotesk-Variable";
   font-variation-settings: "wdth" 125, "wght" 500;
   font-size: 18px;
+  font-size: 4.6vw;
   ::placeholder {
     color: white;
   }
@@ -204,7 +211,9 @@ export const IconTest = styled.img`
   top: 10px;
   top: 2vw;
   width: 25px;
+  width: 6vw;
   height: 25px;
+  height: 6vw;
   @media (min-width: 769px) {
     position: absolute;
     left: 10px;
@@ -238,7 +247,48 @@ export const LogoIcon = styled.img`
   }
 `;
 
+export const SuccessIcon = styled.img`
+order:5;
+width: 9.6vw;
+height:40px;
+height: 9.6vw;
+
+
+@media (min-width: 769px) {
+  position: absolute;
+  width: 311px;
+  width: 3.05vw;
+  height: 53px;
+  height: 3.05vw;
+  left: 933px;
+  left: 62vw;
+  top: 680px;
+  top: 69.7vh;
+`;
+
+function sendDigits(userDigits: string) {
+  return fetch(`/api/digits?userDigits=${userDigits}`, {
+    method: "POST",
+  }).then((response) => response.json());
+}
+
 const Landing: NextPage = () => {
+  const [submitted, setSubmitted] = useState(false);
+  const [userInput, setUserInput] = useState("");
+  const [userPhone, setUserPhone] = useState("");
+
+  async function submitHandler() {
+    setUserPhone(userInput);
+    if (userPhone) {
+      await sendDigits(userPhone);
+      setSubmitted(true);
+    }
+  }
+
+  const inputHandler = (e: any) => {
+    setUserInput(e.target.value);
+  };
+
   return (
     <MainBody>
       <Container>
@@ -263,19 +313,34 @@ const Landing: NextPage = () => {
           We’re still getting dressed, but{" "}
           <GreenSpan> we’ll text you</GreenSpan> when we’re ready...
         </Tagline>
-        <InputWrapper>
-          <LabelTest htmlFor="copy-button">
-            <IconTest id="icon" src="/call.png" alt="icon" />
-            <InputTest
-              name="copy-button"
-              aria-label="copy-button"
-              placeholder="Drop Your Digits"
-              type="tel"
-            />
-          </LabelTest>
-        </InputWrapper>
-        <JoinUs>
-          Join the <GreenSpan>DateList</GreenSpan>
+        {submitted ? (
+          <SuccessIcon id="success" src="/success-icon.png" alt="success" />
+        ) : (
+          <>
+            <InputWrapper>
+              <LabelTest htmlFor="copy-button">
+                <IconTest id="icon" src="/call.png" alt="icon" />
+                <InputTest
+                  name="copy-button"
+                  aria-label="copy-button"
+                  placeholder="Drop Your Digits"
+                  type="tel"
+                  onChange={(e) => {
+                    inputHandler(e);
+                  }}
+                />
+              </LabelTest>
+            </InputWrapper>
+          </>
+        )}
+        <JoinUs onClick={submitHandler}>
+          {submitted ? (
+            <> You're on the list </>
+          ) : (
+            <>
+              Join the <GreenSpan>DateList</GreenSpan>
+            </>
+          )}
         </JoinUs>
       </Container>
     </MainBody>
