@@ -335,7 +335,7 @@ const Landing: NextPage = () => {
         )}
         <JoinUs onClick={submitHandler}>
           {submitted ? (
-            <> You're on the list </>
+            <> You&apos;re on the list! </>
           ) : (
             <>
               Join the <GreenSpan>DateList</GreenSpan>
