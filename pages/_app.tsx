@@ -48,7 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <Head>
-        <title>Natta.</title>
+        <title>natta: the first dating app</title>
         <link rel="icon" href="favicon.ico" />
       </Head>
       <Component {...pageProps} />

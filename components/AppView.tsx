@@ -17,6 +17,7 @@ const AppView = () => {
       minWidth="calc(100vh * (9/19.5))"
       bg="black"
       boxShadow="xl"
+      mr="50px"
     >
       {/* {!runDemo ? (
         <Launch setRunDemo={setRunDemo} setUsername={setUsername} />
