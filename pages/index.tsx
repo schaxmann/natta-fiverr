@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import styled from "styled-components";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export const MainBody = styled.div`
   width: 100vw;
@@ -289,6 +289,10 @@ const Landing: NextPage = () => {
     setUserInput(e.target.value);
   };
 
+  useEffect(() => {
+    setUserPhone(userInput);
+  }, [userInput]);
+
   return (
     <MainBody>
       <Container>
@@ -334,7 +338,7 @@ const Landing: NextPage = () => {
             </InputWrapper>
           </>
         )}
-        <JoinUs onClick={submitHandler}>
+        <JoinUs onClick={submitHandler} disabled={submitted}>
           {submitted ? (
             <> You&apos;re on the list! </>
           ) : (
