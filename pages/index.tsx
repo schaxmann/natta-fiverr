@@ -325,6 +325,7 @@ const Landing: NextPage = () => {
                   aria-label="copy-button"
                   placeholder="Drop Your Digits"
                   type="tel"
+                  autoComplete="off"
                   onChange={(e) => {
                     inputHandler(e);
                   }}
